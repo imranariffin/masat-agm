@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<head>
+    <title>MASAT Annual General Meeting 2015</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,800' rel='stylesheet' type='text/css'>
+    <script src="build/js/scripts.min.js"></script>
+    <link rel="stylesheet" href="build/css/styles.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">MASAT A.G. Meeting 2015</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar">
+          <ul class="nav navbar-nav">
+              % if page == "candidates":
+                <li class="active">
+              % else:
+                <li>
+              % end
+              <a href="/">Candidates</a></li>
+              % if page == "vote":
+                <li class="active">
+              % else:
+                <li>
+              % end
+              <a href="/vote">Popular Votes <span class="sr-only">(current)</span></a></li>
+              % if page == "result":
+                <li class="active">
+              % else:
+                <li>
+              % end
+              <a href="/result">Poll Result</a></li>
+              % if page == "manifesto":
+                <li class="active">
+              % else:
+                <li>
+              % end
+              <a href="/manifesto">Manifesto</a></li>
+              % if page == "ask":
+                <li class="active">
+              % else:
+                <li>
+              % end
+              <a href="/">#AskCandidate</a></li>
+              <li><a href="http://masatoronto.blogspot.ca">MASAT Blog</a></li>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div>
+    </nav>

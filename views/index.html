@@ -1,0 +1,372 @@
+%include views/shared/header.html
+    
+<!--     <div class="navspacer"></div> -->
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Get ready for the next AGM!</h1>
+        <br>
+        <p>Another year has gone by and our club has grown another year older. Without we realizing it, MASAT is already 6 years old. so, it's that time of the year again where the current committee member will pass torch the new hands. This year, the Annual General Meeting (AGM) will be held on 2nd April 2015.</p>
+        <p>This website will features candidates profiles, popular votes and manifesto votes.</p>
+        <p><a class="btn btn-primary btn-lg" href="/vote" role="button">Vote now &raquo;</a></p>
+      </div>
+    </div>
+
+
+    <div class="container">
+
+      <div role="tabpanel">
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active"><a href="#president" aria-controls="president" role="tab" data-toggle="tab">President</a></li>
+          <li role="presentation"><a href="#vp" aria-controls="vp" role="tab" data-toggle="tab">VP</a></li>
+          <li role="presentation"><a href="#secretary" aria-controls="secretary" role="tab" data-toggle="tab">Secretary</a></li>
+          <li role="presentation"><a href="#treasurer" aria-controls="treasurer" role="tab" data-toggle="tab">Treasurer</a></li>
+          <li role="presentation"><a href="#sports" aria-controls="sports" role="tab" data-toggle="tab">Sports Of.</a></li>
+          <li role="presentation"><a href="#media" aria-controls="media" role="tab" data-toggle="tab">Media Of.</a></li>
+          <li role="presentation"><a href="#pr" aria-controls="pr" role="tab" data-toggle="tab">Public Relation Of.</a></li>
+          <li role="presentation"><a href="#cultural" aria-controls="cultural" role="tab" data-toggle="tab">Cultural Affair Of.</a></li>
+          <li role="presentation"><a href="#yearrep" aria-controls="yearrep" role="tab" data-toggle="tab">Year Rep</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="president">
+            <h3>Presidential Candidates</h3>
+            <hr>
+            % for candidate in ls_pres:
+              <div class="row">
+                <div class="col-md-12">
+                  <img src="img/{{candidate[0]}}.jpg" class="img-responsive img-rounded"/>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-7">
+                  <h4>Why {{candidate[0]}}?</h4>
+                  <ul class="list-group">
+                    <li class="list-group-item">"{{candidate[1]}}"</li>
+                  </ul>
+                </div>
+                <div class="col-md-5">
+                  <h4>Manifesto</h4>
+                  <ul class="list-group">
+                    <li class="list-group-item">
+                      {{candidate[2][0][0]}}
+                      <form class="theform" method="POST" role="form">
+                      <!-- <input type="hidden" id="man_id" value="man_id"> -->
+                      <!-- <button type="button" id="target" class="btn btn-primary btn-xs">Like</button> -->
+                      </form>
+                      <!-- {{candidate[2][0][1]}} -->
+                    </li>
+                    <li class="list-group-item">
+                      {{candidate[2][1][0]}}
+                      <!-- <button type="button" class="btn btn-primary btn-xs">Like</button> -->
+                      <!-- {{candidate[2][1][1]}} -->
+                    </li>
+                    <li class="list-group-item">
+                      {{candidate[2][2][0]}}
+                      <!-- <button type="button" class="btn btn-primary btn-xs">Like</button> -->
+                      <!-- {{candidate[2][2][1]}} -->
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <br>
+            % end
+          </div>
+          <div role="tabpanel" class="tab-pane" id="vp">
+            <h3>Vice President Candidates</h3>
+            <hr>
+            % for candidate in ls_vp:
+              <div class="row">
+                <div class="col-md-12">
+                  <img src="img/{{candidate[0]}}.jpg" class="img-responsive img-rounded"/>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-7">
+                  <h4>Why {{candidate[0]}}?</h4>
+                  <ul class="list-group">
+                    <li class="list-group-item">"{{candidate[1]}}"</li>
+                  </ul>
+                </div>
+                <div class="col-md-5">
+                  <h4>Manifesto</h4>
+                  <ul class="list-group">
+                    <li class="list-group-item">{{candidate[2][0][0]}}</li>
+                    <li class="list-group-item">{{candidate[2][1][0]}}</li>
+                    <li class="list-group-item">{{candidate[2][2][0]}}</li>
+                  </ul>
+                </div>
+              </div>
+              <br>
+            % end
+          </div>
+          <div role="tabpanel" class="tab-pane" id="secretary">
+            <h3>Secretary Candidates</h3>
+            <hr>
+            % for candidate in ls_sec:
+              <div class="row">
+                <div class="col-md-12">
+                  <img src="img/{{candidate[0]}}.jpg" class="img-responsive img-rounded"/>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-7">
+                  <h4>Why {{candidate[0]}}?</h4>
+                  <ul class="list-group">
+                    <li class="list-group-item">"{{candidate[1]}}"</li>
+                  </ul>
+                </div>
+                <div class="col-md-5">
+                  <h4>Manifesto</h4>
+                  <ul class="list-group">
+                    <li class="list-group-item">{{candidate[2][0][0]}}</li>
+                    <li class="list-group-item">{{candidate[2][1][0]}}</li>
+                    <li class="list-group-item">{{candidate[2][2][0]}}</li>
+                  </ul>
+                </div>
+              </div>
+              <br>
+            % end
+          </div>
+          <div role="tabpanel" class="tab-pane" id="treasurer">
+            <h3>Treasurer Candidates</h3>
+            <hr>
+            % for candidate in ls_treas:
+              <div class="row">
+                <div class="col-md-12">
+                  <img src="img/{{candidate[0]}}.jpg" class="img-responsive img-rounded"/>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-7">
+                  <h4>Why {{candidate[0]}}?</h4>
+                  <ul class="list-group">
+                    <li class="list-group-item">"{{candidate[1]}}"</li>
+                  </ul>
+                </div>
+                <div class="col-md-5">
+                  <h4>Manifesto</h4>
+                  <ul class="list-group">
+                    <li class="list-group-item">{{candidate[2][0][0]}}</li>
+                    <li class="list-group-item">{{candidate[2][1][0]}}</li>
+                    <li class="list-group-item">{{candidate[2][2][0]}}</li>
+                  </ul>
+                </div>
+              </div>
+              <br>
+            % end
+          </div>
+          <div role="tabpanel" class="tab-pane" id="sports">
+            <h3>Sports Officer Candidates</h3>
+            <hr>
+            % for candidate in ls_sport:
+              <div class="row">
+                <div class="col-md-12">
+                  <img src="img/{{candidate[0]}}.jpg" class="img-responsive img-rounded"/>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-7">
+                  <h4>Why {{candidate[0]}}?</h4>
+                  <ul class="list-group">
+                    <li class="list-group-item">"{{candidate[1]}}"</li>
+                  </ul>
+                </div>
+                <div class="col-md-5">
+                  <h4>Manifesto</h4>
+                  <ul class="list-group">
+                    <li class="list-group-item">{{candidate[2][0][0]}}</li>
+                    <li class="list-group-item">{{candidate[2][1][0]}}</li>
+                    <li class="list-group-item">{{candidate[2][2][0]}}</li>
+                  </ul>
+                </div>
+              </div>
+              <br>
+            % end
+          </div>
+          <div role="tabpanel" class="tab-pane" id="media">
+            <h3>Media Officer Candidates</h3>
+            <hr>
+            % for candidate in ls_media:
+              <div class="row">
+                <div class="col-md-12">
+                  <img src="img/{{candidate[0]}}.jpg" class="img-responsive img-rounded"/>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-7">
+                  <h4>Why {{candidate[0]}}?</h4>
+                  <ul class="list-group">
+                    <li class="list-group-item">"{{candidate[1]}}"</li>
+                  </ul>
+                </div>
+                <div class="col-md-5">
+                  <h4>Manifesto</h4>
+                  <ul class="list-group">
+                    <li class="list-group-item">{{candidate[2][0][0]}}</li>
+                    <li class="list-group-item">{{candidate[2][1][0]}}</li>
+                    <li class="list-group-item">{{candidate[2][2][0]}}</li>
+                  </ul>
+                </div>
+              </div>
+              <br>
+            % end
+          </div>
+          <div role="tabpanel" class="tab-pane" id="pr">
+            <h3>Public Relation Officer Candidates</h3>
+            <hr>
+            % for candidate in ls_pr:
+              <div class="row">
+                <div class="col-md-12">
+                  <img src="img/{{candidate[0]}}.jpg" class="img-responsive img-rounded"/>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-7">
+                  <h4>Why {{candidate[0]}}?</h4>
+                  <ul class="list-group">
+                    <li class="list-group-item">"{{candidate[1]}}"</li>
+                  </ul>
+                </div>
+                <div class="col-md-5">
+                  <h4>Manifesto</h4>
+                  <ul class="list-group">
+                    <li class="list-group-item">{{candidate[2][0][0]}}</li>
+                    <li class="list-group-item">{{candidate[2][1][0]}}</li>
+                    <li class="list-group-item">{{candidate[2][2][0]}}</li>
+                  </ul>
+                </div>
+              </div>
+              <br>
+            % end
+          </div>
+          <div role="tabpanel" class="tab-pane" id="cultural">
+            <h3>Cultural Affair Candidates</h3>
+            <hr>
+            % for candidate in ls_cul:
+              <div class="row">
+                <div class="col-md-12">
+                  <img src="img/{{candidate[0]}}.jpg" class="img-responsive img-rounded"/>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-7">
+                  <h4>Why {{candidate[0]}}?</h4>
+                  <ul class="list-group">
+                    <li class="list-group-item">"{{candidate[1]}}"</li>
+                  </ul>
+                </div>
+                <div class="col-md-5">
+                  <h4>Manifesto</h4>
+                  <ul class="list-group">
+                    <li class="list-group-item">{{candidate[2][0][0]}}</li>
+                    <li class="list-group-item">{{candidate[2][1][0]}}</li>
+                    <li class="list-group-item">{{candidate[2][2][0]}}</li>
+                  </ul>
+                </div>
+              </div>
+              <br>
+            % end
+          </div>
+          <div role="tabpanel" class="tab-pane" id="yearrep">
+            <h3>4th Year Representatives Candidates</h3>
+            <hr>
+            % for candidate in ls_yrep4:
+              <div class="row">
+                <div class="col-md-12">
+                  <img src="img/{{candidate[0]}}.jpg" class="img-responsive img-rounded"/>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-7">
+                  <h4>Why {{candidate[0]}}?</h4>
+                  <ul class="list-group">
+                    <li class="list-group-item">"{{candidate[1]}}"</li>
+                  </ul>
+                </div>
+                <div class="col-md-5">
+                  <h4>Manifesto</h4>
+                  <ul class="list-group">
+                    <li class="list-group-item">{{candidate[2][0][0]}}</li>
+                    <li class="list-group-item">{{candidate[2][1][0]}}</li>
+                    <li class="list-group-item">{{candidate[2][2][0]}}</li>
+                  </ul>
+                </div>
+              </div>
+              <br>
+            % end
+
+            <h3>3rd Year Representatives Candidates</h3>
+            <hr>
+            % for candidate in ls_yrep3:
+              <div class="row">
+                <div class="col-md-12">
+                  <img src="img/{{candidate[0]}}.jpg" class="img-responsive img-rounded"/>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-7">
+                  <h4>Why {{candidate[0]}}?</h4>
+                  <ul class="list-group">
+                    <li class="list-group-item">"{{candidate[1]}}"</li>
+                  </ul>
+                </div>
+                <div class="col-md-5">
+                  <h4>Manifesto</h4>
+                  <ul class="list-group">
+                    <li class="list-group-item">{{candidate[2][0][0]}}</li>
+                    <li class="list-group-item">{{candidate[2][1][0]}}</li>
+                    <li class="list-group-item">{{candidate[2][2][0]}}</li>
+                  </ul>
+                </div>
+              </div>
+              <br>
+            % end
+
+            <h3>2nd Year Representatives Candidates</h3>
+            <hr>
+            % for candidate in ls_yrep2:
+              <div class="row">
+                <div class="col-md-12">
+                  <img src="img/{{candidate[0]}}.jpg" class="img-responsive img-rounded"/>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-7">
+                  <h4>Why {{candidate[0]}}?</h4>
+                  <ul class="list-group">
+                    <li class="list-group-item">"{{candidate[1]}}"</li>
+                  </ul>
+                </div>
+                <div class="col-md-5">
+                  <h4>Manifesto</h4>
+                  <ul class="list-group">
+                    <li class="list-group-item">{{candidate[2][0][0]}}</li>
+                    <li class="list-group-item">{{candidate[2][1][0]}}</li>
+                    <li class="list-group-item">{{candidate[2][2][0]}}</li>
+                  </ul>
+                </div>
+              </div>
+              <br>
+            % end
+          </div>
+        </div>
+
+      </div>
+    </div>
+</body>
+</html>

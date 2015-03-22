@@ -1,0 +1,293 @@
+%include views/shared/header.html
+
+    <br>
+    <br>
+
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-md-6">
+                <h4 >President Results</h4>
+                <div id="chart"></div>
+            </div>
+            <div class="col-md-6">
+                <h4>Vice President Results</h4>
+
+                <div id="vp_chart"></div>
+            </div>
+        </div>
+
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Secretary Results</h4>
+                <div id="s_chart"></div>
+            </div>
+            <div class="col-md-6">
+                <h4>Treasurer Results</h4>
+
+                <div id="treas_chart"></div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Sports Officer Results</h4>
+                <div id="sports_chart"></div>
+            </div>
+            <div class="col-md-6">
+                <h4>Media Officer Results</h4>
+                <div id="media_chart"></div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Public Relations Officer Results</h4>
+                <div id="pr_chart"></div>
+            </div>
+            <div class="col-md-6">
+                <h4>Cultural Affair Officer Results</h4>
+                <div id="cul_chart"></div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h4>4th Year Representatives Results</h4>
+                <div id="yrep4_chart"></div>
+            </div>
+            <div class="col-md-6">
+                <h4>3rd Year Representatives Results</h4>
+                <div id="yrep3_chart"></div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h4>2nd Year Representatives Results</h4>
+                <div id="yrep2_chart"></div>
+            </div>
+        </div>
+
+    </div>
+    <script>
+
+    var chart = c3.generate({
+        data: {
+            columns: [
+                % for vote in pc:
+                    ['{{vote[0]}}', {{vote[1]}}],
+                % end
+            ],
+            type: 'pie'
+        },
+        pie: {
+            label: {
+                format: function (value, ratio, id) {
+                    return d3.format('')(value);
+                }
+            }
+        }
+    });
+
+    var chart = c3.generate({
+        bindto: '#vp_chart',
+        data: {
+            columns: [
+                % for vote in vpc:
+                    ['{{vote[0]}}', {{vote[1]}}],
+                % end
+            ],
+            type: 'pie'
+        },
+        pie: {
+            label: {
+                format: function (value, ratio, id) {
+                    return d3.format('')(value);
+                }
+            }
+        }
+    });
+
+    var chart = c3.generate({
+        bindto: '#s_chart',
+        data: {
+            columns: [
+                % for vote in sc:
+                    ['{{vote[0]}}', {{vote[1]}}],
+                % end
+            ],
+            type: 'pie'
+        },
+        pie: {
+            label: {
+                format: function (value, ratio, id) {
+                    return d3.format('')(value);
+                }
+            }
+        }
+    });
+
+    var chart = c3.generate({
+        bindto: '#treas_chart',
+        data: {
+            columns: [
+                % for vote in treas:
+                    ['{{vote[0]}}', {{vote[1]}}],
+                % end
+            ],
+            type: 'pie'
+        },
+        pie: {
+            label: {
+                format: function (value, ratio, id) {
+                    return d3.format('')(value);
+                }
+            }
+        }
+    });
+
+    var chart = c3.generate({
+        bindto: '#sports_chart',
+        data: {
+            columns: [
+                % for vote in sports:
+                    ['{{vote[0]}}', {{vote[1]}}],
+                % end
+            ],
+            type: 'pie'
+        },
+        pie: {
+            label: {
+                format: function (value, ratio, id) {
+                    return d3.format('')(value);
+                }
+            }
+        }
+    });
+
+    var chart = c3.generate({
+        bindto: '#media_chart',
+        data: {
+            columns: [
+                % for vote in media:
+                    ['{{vote[0]}}', {{vote[1]}}],
+                % end
+            ],
+            type: 'pie'
+        },
+        pie: {
+            label: {
+                format: function (value, ratio, id) {
+                    return d3.format('')(value);
+                }
+            }
+        }
+    });
+
+    var chart = c3.generate({
+        bindto: '#pr_chart',
+        data: {
+            columns: [
+                % for vote in pr:
+                    ['{{vote[0]}}', {{vote[1]}}],
+                % end
+            ],
+            type: 'pie'
+        },
+        pie: {
+            label: {
+                format: function (value, ratio, id) {
+                    return d3.format('')(value);
+                }
+            }
+        }
+    });
+
+    var chart = c3.generate({
+        bindto: '#cul_chart',
+        data: {
+            columns: [
+                % for vote in cul:
+                    ['{{vote[0]}}', {{vote[1]}}],
+                % end
+            ],
+            type: 'pie'
+        },
+        pie: {
+            label: {
+                format: function (value, ratio, id) {
+                    return d3.format('')(value);
+                }
+            }
+        }
+    });
+
+    var chart = c3.generate({
+        bindto: '#yrep4_chart',
+        data: {
+            columns: [
+                % for vote in yrep4:
+                    ['{{vote[0]}}', {{vote[1]}}],
+                % end
+            ],
+            type: 'pie'
+        },
+        pie: {
+            label: {
+                format: function (value, ratio, id) {
+                    return d3.format('')(value);
+                }
+            }
+        }
+    });
+
+    var chart = c3.generate({
+        bindto: '#yrep3_chart',
+        data: {
+            columns: [
+                % for vote in yrep3:
+                    ['{{vote[0]}}', {{vote[1]}}],
+                % end
+            ],
+            type: 'pie'
+        },
+        pie: {
+            label: {
+                format: function (value, ratio, id) {
+                    return d3.format('')(value);
+                }
+            }
+        }
+    });
+
+    var chart = c3.generate({
+        bindto: '#yrep2_chart',
+        data: {
+            columns: [
+                % for vote in yrep2:
+                    ['{{vote[0]}}', {{vote[1]}}],
+                % end
+            ],
+            type: 'pie'
+        },
+        pie: {
+            label: {
+                format: function (value, ratio, id) {
+                    return d3.format('')(value);
+                }
+            }
+        }
+    });
+    
+    </script>
+  </body>
+</html>

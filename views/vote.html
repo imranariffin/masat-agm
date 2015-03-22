@@ -1,0 +1,154 @@
+%include views/shared/header.html
+
+    % if not complete:
+    <div class="navspacer"></div>
+    <div class="reg-content">
+        <div class="btitle h1 text-center">MASAT Popular Votes</div>
+        % if c and not (p and vp and s and treas and sports and media and cul and pr and yrep4 and yrep3 and yrep2):
+            <div class="wrong h2 text-center">Please fill in every form</div>
+        % end
+        <form class="theform" method="POST" role="form">
+            <div class="form-inner">
+                <div class="form-box">
+                    <label for="InputName" class="label-area">Access Code (Required - Enter TEST for now)</label>
+                    <div class="input-group form-area">
+                        <input type="text" class="form-control" name="code" value="{{c}}" id="InputName" placeholder="Enter Unique Code" required>
+                    </div>
+                </div>
+                <div class="form-box">
+                    <label for="InputEmail" class="label-area">President</label>
+                    <div class="input-group form-area">
+                        <select id="president" name="president" class="form-control">
+                            <option value="{{p}}"><b>{{p}}</b></option>
+                            % for name in ls_pres:
+                                <option value="{{name}}">{{name}}</option>
+                            % end
+                        </select>
+                        <!-- <input type="text" class="form-control" id="InputEmailFirst" name="president" value="{{p}}" placeholder="Choose your president, sir" required> -->
+                    </div>
+                </div>
+                <div class="form-box">
+                    <label for="InputUni" class="label-area">Vice President</label>
+                    <div class="input-group form-area">
+                        <select id="vice_president" name="vice_president" class="form-control">
+                            <option value="{{vp}}"><b>{{vp}}</b></option>
+                            % for name in ls_vp:
+                                <option value="{{name}}">{{name}}</option>
+                            % end
+                            </select>
+                    </div>
+                </div>
+                <div class="form-box">
+                    <label for="InputUni" class="label-area">Secretary</label>
+                    <div class="input-group form-area">
+                        <select id="secretary" name="secretary" class="form-control">
+                            <option value="{{s}}"><b>{{s}}</b></option>
+                            % for name in ls_sec:
+                                <option value="{{name}}">{{name}}</option>
+                            % end
+                            </select>
+                    </div>
+                </div>
+                <div class="form-box">
+                    <label for="InputUni" class="label-area">Treasurer</label>
+                    <div class="input-group form-area">
+                        <select id="treas" name="treas" class="form-control">
+                            <option value="{{treas}}"><b>{{treas}}</b></option>
+                            % for name in ls_treas:
+                                <option value="{{name}}">{{name}}</option>
+                            % end
+                            </select>
+                    </div>
+                </div>
+                <div class="form-box">
+                    <label for="InputUni" class="label-area">Sports Officer</label>
+                    <div class="input-group form-area">
+                        <select id="sports" name="sports" class="form-control">
+                            <option value="{{sports}}"><b>{{sports}}</b></option>
+                            % for name in ls_sports:
+                                <option value="{{name}}">{{name}}</option>
+                            % end
+                            </select>
+                    </div>
+                </div>
+                <div class="form-box">
+                    <label for="InputUni" class="label-area">Media Officer</label>
+                    <div class="input-group form-area">
+                        <select id="media" name="media" class="form-control">
+                            <option value="{{media}}"><b>{{media}}</b></option>
+                            % for name in ls_media:
+                                <option value="{{name}}">{{name}}</option>
+                            % end
+                            </select>
+                    </div>
+                </div>
+                <div class="form-box">
+                    <label for="InputUni" class="label-area">Public Relation Officer</label>
+                    <div class="input-group form-area">
+                        <select id="pr" name="pr" class="form-control">
+                            <option value="{{pr}}"><b>{{pr}}</b></option>
+                            % for name in ls_pr:
+                                <option value="{{name}}">{{name}}</option>
+                            % end
+                            </select>
+                    </div>
+                </div>
+                <div class="form-box">
+                    <label for="InputUni" class="label-area">Cultural Affair Officer</label>
+                    <div class="input-group form-area">
+                        <select id="cul" name="cul" class="form-control">
+                            <option value="{{cul}}"><b>{{cul}}</b></option>
+                            % for name in ls_cul:
+                                <option value="{{name}}">{{name}}</option>
+                            % end
+                            </select>
+                    </div>
+                </div>
+                <div class="form-box">
+                    <label for="InputUni" class="label-area">4th Year Representatives</label>
+                    <div class="input-group form-area">
+                        <select id="yrep4" name="yrep4" class="form-control">
+                            <option value="{{yrep4}}"><b>{{yrep4}}</b></option>
+                            % for name in ls_yrep4:
+                                <option value="{{name}}">{{name}}</option>
+                            % end
+                            </select>
+                    </div>
+                </div>
+                <div class="form-box">
+                    <label for="InputUni" class="label-area">3rd Year Representatives</label>
+                    <div class="input-group form-area">
+                        <select id="yrep3" name="yrep3" class="form-control">
+                            <option value="{{yrep3}}"><b>{{yrep3}}</b></option>
+                            % for name in ls_yrep3:
+                                <option value="{{name}}">{{name}}</option>
+                            % end
+                            </select>
+                    </div>
+                </div>
+                <div class="form-box">
+                    <label for="InputUni" class="label-area">2nd Year Representatives</label>
+                    <div class="input-group form-area">
+                        <select id="yrep2" name="yrep2" class="form-control">
+                            <option value="{{yrep2}}"><b>{{yrep2}}</b></option>
+                            % for name in ls_yrep2:
+                                <option value="{{name}}">{{name}}</option>
+                            % end
+                            </select>
+                    </div>
+                </div>
+                <div class="form-box">
+                    <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-primary center-block">
+                </div>
+            </div>
+        </form>
+    %else:
+    <div class="navspacer"></div>
+    <div class="reg-content">
+        <div class="btitle h1 text-center">You have successfully voted!</div>
+    %end
+    <br>
+    <br>
+
+  </body>
+</html>
