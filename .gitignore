@@ -54,3 +54,6 @@ docs/_build/
 target/
 
 .DS_Store
+node_modules
+package.json
+Gruntfile.js
