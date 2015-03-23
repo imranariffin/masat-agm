@@ -403,7 +403,8 @@ def manifesto():
 	for doc in cursor:
 		manifest = doc['manifesto']
 		for i in manifest:
-			ls.append(i)
+			if i[0] not in ['1','2','3']:
+				ls.append(i)
 
 	ls.sort(key=lambda tup: tup[1], reverse=True)
 
