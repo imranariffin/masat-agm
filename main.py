@@ -13,15 +13,15 @@ def server_static(filepath):
 import pymongo
 from pymongo import MongoClient
 
-@route('/api', method='GET')
-def get_like():
-	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
-	db = client.get_default_database()
-	entity = db['man'].find()
-	if not entity:
-		abort(404, 'No document with id %s' % id)
-	entity = dumps(entity)
-	return entity
+# @route('/api', method='GET')
+# def get_like():
+# 	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
+# 	db = client.get_default_database()
+# 	entity = db['man'].find()
+# 	if not entity:
+# 		abort(404, 'No document with id %s' % id)
+# 	entity = dumps(entity)
+# 	return entity
 
 @route("/", method="GET")
 def main():
@@ -404,6 +404,7 @@ def manifesto():
 		manifest = doc['manifesto']
 		for i in manifest:
 			if i[0] not in ['1','2','3']:
+				i.append(doc['position'])
 				ls.append(i)
 
 	ls.sort(key=lambda tup: tup[1], reverse=True)
