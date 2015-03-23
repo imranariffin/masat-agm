@@ -372,6 +372,8 @@ def manifesto():
 	get_id = str(request.forms.man_id)
 	get_sid = get_id[1:25]
 	fb_id = get_id[25:]
+
+	logging_err = False
 	
 	existing_voter = False
 
@@ -382,7 +384,7 @@ def manifesto():
 			if doc['vote_id'] == get_id[:25]:
 				existing_voter = True
 
-		if not existing_voter:
+		if not existing_voter and fb_id:
 			upvotes.insert({"username":fb_id, "vote_id":get_id[:25]})
 			get_index = int(get_id[:1])
 			new_c = man.find({"_id":ObjectId(get_sid)})
@@ -390,6 +392,9 @@ def manifesto():
 			for doc in new_c:
 				doc['manifesto'][get_index][1] += 1
 			man.update({'_id':doc['_id']}, {"$set":doc})
+
+		if not fb_id:
+			logging_err = True
 
 	# for doc in new_c:
 	# 	manifest = doc['manifesto']
@@ -410,7 +415,7 @@ def manifesto():
 	ls.sort(key=lambda tup: tup[1], reverse=True)
 
 	client.close()
-	return template('views/manifesto.html', page="manifesto", ls=ls)
+	return template('views/manifesto.html', page="manifesto", ls=ls, logging_err=logging_err)
 
 run(host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
 
