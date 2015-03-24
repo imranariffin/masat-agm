@@ -493,7 +493,8 @@ def ask():
 		ask.insert({"candidate":str(get_candidate),
 					 "question":str(get_question),
 					 "cookie":eat_cookies(),
-					 "fb":insert_fb
+					 "fb":insert_fb,
+					 "fb_asker":fb_id,
 					  })
 
 	get_answer = request.forms.answer
