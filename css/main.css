@@ -1024,17 +1024,6 @@ a.sidelink:active
     overflow: hidden;
 }
 
-.answer {
-    color: #8f8683;
-    font-size: 18px;
-    font-weight: 300;
-    padding: 10px 20px;
-    border-left: 2px solid transparent;
-    margin-top: 2px;
-    margin-bottom: 20px;
-    overflow-wrap: break-word;
-}
-
 .end {
     padding-bottom: 30px;
 }
