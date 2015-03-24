@@ -4,13 +4,20 @@
     <div class="navspacer"></div>
     <div class="reg-content">
         <div class="btitle h1 text-center">MASAT Popular Votes</div>
-        % if c and not (p and vp and s and treas and sports and media and cul and pr and yrep4 and yrep3 and yrep2):
+        % if not blank and not all_filled:
             <div class="wrong h2 text-center">Please fill in every form</div>
         % end
+        % if not access:
+            <div class="wrong h2 text-center">Please use a different keyword</div>
+        % end
+        % if blank and all_filled:
+            <div class="wrong h2 text-center">Code cannot be blank</div>
+        % end
+
         <form class="theform" method="POST" role="form">
             <div class="form-inner">
                 <div class="form-box">
-                    <label for="InputName" class="label-area">Access Code (Required - Enter TEST for now)</label>
+                    <label for="InputName" class="label-area">Access Code (Enter any keyword)</label>
                     <div class="input-group form-area">
                         <input type="text" class="form-control" name="code" value="{{c}}" id="InputName" placeholder="Enter Unique Code" required>
                     </div>

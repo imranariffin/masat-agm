@@ -162,9 +162,27 @@ def vote():
 			ls_yrep2.append(doc['name'])
 
 	votes = db['votes']
+	new_cursor = votes.find()
+	code_ls = []
 
-	# if get_code in access_code:
+	for doc in new_cursor:
+		try:
+			code_ls.append(doc['code'])
+		except:
+			pass
+
+	access = True
+	blank = False
+	all_filled = False
+
+	if not get_code:
+		blank = True
+	if get_code in code_ls and not blank:
+		access = False
 	if get_president and get_vice_president and get_secretary and get_treas and get_sports and get_media and get_pr and get_cul and get_yrep4 and get_yrep3 and get_yrep2:
+		all_filled = True
+
+	if access and not blank and all_filled:
 		votes.insert({"code":str(get_code),
 					  "president":str(get_president),
 					  "vice_president":str(get_vice_president),
@@ -208,7 +226,10 @@ def vote():
 									 yrep4=get_yrep4,
 									 yrep3=get_yrep3,
 									 yrep2=get_yrep2,
-									 page="vote")
+									 page="vote",
+									 access=access,
+									 all_filled=all_filled,
+									 blank=blank)
 
 @route("/result")
 def redirect():
