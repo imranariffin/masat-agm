@@ -1,9 +1,16 @@
 #Bottle Framework
-from bottle import route, run, template, request, static_file, get, post, request, Bottle, error
+from bottle import route, run, template, request, static_file, get, post, response, Bottle, error
 import bottle
 import os
 import random
 from bson.json_util import dumps
+
+from uuid import uuid4
+
+def eat_cookies():
+	cookie_id = bottle.request.get_cookie('mycookiename', str(uuid4()))
+	bottle.response.set_cookie('mycookiename', cookie_id, max_age=950400)
+	return cookie_id
 
 #specifying the path for the files
 @route('/<filepath:path>')
@@ -182,6 +189,10 @@ def vote():
 	if get_president and get_vice_president and get_secretary and get_treas and get_sports and get_media and get_pr and get_cul and get_yrep4 and get_yrep3 and get_yrep2:
 		all_filled = True
 
+	cookie = eat_cookies()
+	cookies = db['cookies']
+	has_cookie = cookies.find({'cookie':cookie}).count()
+
 	if access and not blank and all_filled:
 		votes.insert({"code":str(get_code),
 					  "president":str(get_president),
@@ -194,8 +205,10 @@ def vote():
 					  "cul":str(get_cul),
 					  "yrep4":str(get_yrep4),
 					  "yrep3":str(get_yrep3),
-					  "yrep2":str(get_yrep2)
+					  "yrep2":str(get_yrep2),
+					  "cookie":cookie
 					  })
+		cookies.insert({"cookie":cookie})
 
 		client.close()
 		# return template('index.html',success=True)

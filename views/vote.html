@@ -1,17 +1,19 @@
 %include views/shared/header.html
-
+    
+    <br>
+    <br>
+    <br>
     % if not complete:
-    <div class="navspacer"></div>
     <div class="reg-content">
         <div class="btitle h1 text-center">MASAT Popular Votes</div>
         % if not blank and not all_filled:
-            <div class="wrong h2 text-center">Please fill in every form</div>
+            <div class="wrong h3 text-center">Please fill in every form</div>
         % end
         % if not access:
-            <div class="wrong h2 text-center">Please use a different keyword</div>
+            <div class="wrong h3 text-center">Please use a different keyword</div>
         % end
         % if blank and all_filled:
-            <div class="wrong h2 text-center">Code cannot be blank</div>
+            <div class="wrong h3 text-center">Code cannot be blank</div>
         % end
 
         <form class="theform" method="POST" role="form">
