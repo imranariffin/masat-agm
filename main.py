@@ -415,7 +415,9 @@ def manifesto():
 	ls.sort(key=lambda tup: tup[1], reverse=True)
 
 	client.close()
-	return template('views/manifesto.html', page="manifesto", ls=ls, logging_err=logging_err)
+	return template('views/manifesto.html', page="manifesto", 
+											ls=ls, 
+											logging_err=logging_err)
 
 run(host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
 
