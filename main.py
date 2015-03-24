@@ -486,6 +486,8 @@ def ask():
 	# has_cookie = cookies.find({'candidate':cookie}).count()
 
 	if not blank:
+		get_fb_asker = request.forms.fb_asker
+
 		man_cursor = man.find({'name':get_candidate})
 		insert_fb = ''
 		for doc in man_cursor:
@@ -494,7 +496,7 @@ def ask():
 					 "question":str(get_question),
 					 "cookie":eat_cookies(),
 					 "fb":insert_fb,
-					 "fb_asker":fb_id,
+					 "fb_asker":get_fb_asker,
 					  })
 
 	get_answer = request.forms.answer
