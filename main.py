@@ -453,6 +453,8 @@ def manifesto():
 											ls=ls, 
 											logging_err=logging_err)
 
+from datetime import date
+
 @route("/ask", method="GET")
 @route("/ask", method="POST")
 def ask():
@@ -497,6 +499,7 @@ def ask():
 					 "cookie":eat_cookies(),
 					 "fb":insert_fb,
 					 "fb_asker":get_fb_asker,
+					 "date":str(date.today()),
 					  })
 
 	get_answer = request.forms.answer
@@ -507,6 +510,8 @@ def ask():
 			doc['answer'] = get_answer
 			ask.update({'_id':doc['_id']}, {"$set":doc})
 
+	get_filter = request.query.filter
+
 	ask_cursor = ask.find()
 
 	answer = ''
@@ -515,14 +520,32 @@ def ask():
 			answer = doc['answer']
 		except:
 			pass
-		question_ls.append([doc['candidate'], doc['question'], answer, doc['_id']])
+		question_ls.append([doc['candidate'], doc['question'], answer, doc['_id'], doc['date']])
 		answer = ''
+
+	if get_filter == "candidate":
+		question_ls.sort(key=lambda tup: tup[0], reverse=False)
+	elif get_filter == "date":
+		question_ls.sort(key=lambda tup: tup[4], reverse=True)
+
+	dates = ask.distinct("date")
+	new_q_ls = []
+	temp = []
+	for d in dates:
+		for q in question_ls:
+			if d == q[4]:
+				temp.append(q)
+		new_q_ls.append([d,temp])
+		temp = []
+
+	new_q_ls.sort(key=lambda tup: tup[0], reverse=True)
 
 	client.close()
 	return template('views/ask.html', page="ask", 
 									  candidate_ls=candidate_ls,
 									  question_ls=question_ls,
-									  access=access)
+									  access=access,
+									  new_q_ls=new_q_ls)
 
 @route("/admin", method="GET")
 @route("/admin", method="POST")
