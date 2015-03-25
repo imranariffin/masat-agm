@@ -536,7 +536,7 @@ def ask():
 			for doc in ve_ask_cursor:
 				temp = doc['likes']
 				temp.append(v_fb_id)
-				temp_score = len(count)
+				temp_score = len(temp)
 				doc['likes'] = temp
 				doc['score'] = temp_score
 
