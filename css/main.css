@@ -1016,14 +1016,6 @@ a.sidelink:active
     overflow: hidden;
 }
 
-.question{
-    position: relative;
-    padding-left: 20px;
-    vertical-align: middle;
-    border-left: 2px solid transparent;
-    overflow: hidden;
-}
-
 .end {
     padding-bottom: 30px;
 }
