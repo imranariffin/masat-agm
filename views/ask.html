@@ -64,11 +64,11 @@
           <table class="table table-hover">
           % for question in the_questions[1]:
             <tr>
-              <!-- <td>
+              <td>
                 <form action="" method="post">
-                  <button class="btn btn-primary btn-xs" name="vid" value="v{{question[3]}}">like</button>
+                  <button class="btn btn-primary btn-xs" name="vid" value="v{{question[3]}}">like <span class="badge">{{question[6]}}</span></button>
                 </form>
-              </td> -->
+              </td>
               <td>
                 <p>Question for <b>{{question[0]}}</b></p>
                 </td>

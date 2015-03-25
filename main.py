@@ -528,24 +528,22 @@ def ask():
 
 		for doc in v_ask_cursor:
 			if v_fb_id in doc['likes']:
-				pass
-
-		for doc in up_cursor:
-			if doc['vote_id'] == get_id[:25]:
 				existing_voter = True
 
-		if not existing_voter and fb_id:
-			upvotes.insert({"username":fb_id, "vote_id":get_id[:25]})
-			get_index = int(get_id[:1])
-			new_c = man.find({"_id":ObjectId(get_sid)})
-		
-			for doc in new_c:
-				doc['manifesto'][get_index][1] += 1
-			man.update({'_id':doc['_id']}, {"$set":doc})
+		if not existing_voter and v_fb_id:
+			ve_ask_cursor = ask.find({'_id':ObjectId(get_vid)})
 
-		if not fb_id:
+			for doc in ve_ask_cursor:
+				temp = doc['likes']
+				temp.append(v_fb_id)
+				temp_score = len(count)
+				doc['likes'] = temp
+				doc['score'] = temp_score
+
+			ask.update({'_id':ObjectId(get_vid)}, {"$set":doc})
+
+		if not v_fb_id:
 			logging_err = True
-
 
 	ask_cursor = ask.find()
 
@@ -558,7 +556,7 @@ def ask():
 				answered = 1
 		except:
 			pass
-		question_ls.append([doc['candidate'], doc['question'], answer, doc['_id'], doc['date'], answered])
+		question_ls.append([doc['candidate'], doc['question'], answer, doc['_id'], doc['date'], answered, doc['score']])
 		answer = ''
 		answered = 0
 
