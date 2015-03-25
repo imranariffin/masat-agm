@@ -515,18 +515,26 @@ def ask():
 	ask_cursor = ask.find()
 
 	answer = ''
+	answered = 0
 	for doc in ask_cursor:
 		try:
 			answer = doc['answer']
+			if answer:
+				answered = 1
 		except:
 			pass
-		question_ls.append([doc['candidate'], doc['question'], answer, doc['_id'], doc['date']])
+		question_ls.append([doc['candidate'], doc['question'], answer, doc['_id'], doc['date'], answered])
 		answer = ''
+		answered = 0
 
 	if get_filter == "candidate":
 		question_ls.sort(key=lambda tup: tup[0], reverse=False)
-	elif get_filter == "date":
-		question_ls.sort(key=lambda tup: tup[4], reverse=True)
+	elif get_filter == "answered":
+		question_ls.sort(key=lambda tup: tup[0], reverse=False)
+		question_ls.sort(key=lambda tup: tup[5], reverse=True)
+	elif get_filter == "unanswered":
+		question_ls.sort(key=lambda tup: tup[0], reverse=False)
+		question_ls.sort(key=lambda tup: tup[5], reverse=False)
 
 	dates = ask.distinct("date")
 	new_q_ls = []
@@ -574,22 +582,6 @@ def admin():
 	if get_qid:
 		if fb_id in admin_id:
 			db.ask.remove({'_id':ObjectId(get_qid)})
-
-	# has_cookie = cookies.find({'candidate':cookie}).count()
-
-	if not blank:
-		get_fb_asker = request.forms.fb_asker
-
-		man_cursor = man.find({'name':get_candidate})
-		insert_fb = ''
-		for doc in man_cursor:
-			insert_fb = doc['fb']
-		ask.insert({"candidate":str(get_candidate),
-					 "question":str(get_question),
-					 "cookie":eat_cookies(),
-					 "fb":insert_fb,
-					 "fb_asker":get_fb_asker,
-					  })
 
 	get_answer = request.forms.answer
 	get_aid = request.forms.aid
