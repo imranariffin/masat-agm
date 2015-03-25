@@ -524,7 +524,74 @@ def ask():
 									  question_ls=question_ls,
 									  access=access)
 
+@route("/admin", method="GET")
+@route("/admin", method="POST")
+def admin():
+	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
+	db = client.get_default_database()
+	man = db['man']
+	ask = db['ask']
+	candidate_ls = man.distinct("name")
+
+	question_ls = []
+
+	get_candidate = request.forms.candidates
+	get_question= request.forms.question
+	get_id = str(request.forms.qid)
+	get_qid = get_id[:24]
+	fb_id = get_id[24:]
+
+	blank = False
+	if not get_question or not get_candidate:
+		blank=True
+
+	access = False
+	admin_id = ['Mohd Fathuddin Romeli','Anas Faris','Ahmad Zahir Shaifuddin','Muzakkir Mohamad']
+	doc_to_del = False
+	if get_qid:
+		if fb_id in admin_id:
+			db.ask.remove({'_id':ObjectId(get_qid)})
+
+	# has_cookie = cookies.find({'candidate':cookie}).count()
+
+	if not blank:
+		get_fb_asker = request.forms.fb_asker
+
+		man_cursor = man.find({'name':get_candidate})
+		insert_fb = ''
+		for doc in man_cursor:
+			insert_fb = doc['fb']
+		ask.insert({"candidate":str(get_candidate),
+					 "question":str(get_question),
+					 "cookie":eat_cookies(),
+					 "fb":insert_fb,
+					 "fb_asker":get_fb_asker,
+					  })
+
+	get_answer = request.forms.answer
+	get_aid = request.forms.aid
+	if get_answer:
+		ask_cursor_3 = ask.find({'_id':ObjectId(get_aid)})
+		for doc in ask_cursor_3:
+			doc['answer'] = get_answer
+			ask.update({'_id':doc['_id']}, {"$set":doc})
+
+	ask_cursor = ask.find()
+
+	answer = ''
+	for doc in ask_cursor:
+		try:
+			answer = doc['answer']
+		except:
+			pass
+		question_ls.append([doc['candidate'], doc['question'], answer, doc['_id']])
+		answer = ''
+
+	client.close()
+	return template('views/admin.html', page="ask", 
+									  candidate_ls=candidate_ls,
+									  question_ls=question_ls,
+									  access=access)
+
 run(host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
-
-
 
