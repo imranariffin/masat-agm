@@ -500,7 +500,8 @@ def ask():
 					 "fb":insert_fb,
 					 "fb_asker":get_fb_asker,
 					 "date":str(date.today()),
-					 "score":0
+					 "score":0,
+					 "likes":[]
 					  })
 
 	get_answer = request.forms.answer
@@ -512,6 +513,39 @@ def ask():
 			ask.update({'_id':doc['_id']}, {"$set":doc})
 
 	get_filter = request.query.filter
+
+	# Implementing Voting System for Q and A
+	get_vvid = str(request.forms.vid)
+	get_vid = get_vvid[1:25]
+	v_fb_id = get_vvid[25:]
+
+	logging_err = False
+	
+	existing_voter = False
+
+	if get_vid:
+		v_ask_cursor = ask.find({'_id':ObjectId(get_vid)})
+
+		for doc in v_ask_cursor:
+			if v_fb_id in doc['likes']:
+				pass
+
+		for doc in up_cursor:
+			if doc['vote_id'] == get_id[:25]:
+				existing_voter = True
+
+		if not existing_voter and fb_id:
+			upvotes.insert({"username":fb_id, "vote_id":get_id[:25]})
+			get_index = int(get_id[:1])
+			new_c = man.find({"_id":ObjectId(get_sid)})
+		
+			for doc in new_c:
+				doc['manifesto'][get_index][1] += 1
+			man.update({'_id':doc['_id']}, {"$set":doc})
+
+		if not fb_id:
+			logging_err = True
+
 
 	ask_cursor = ask.find()
 
