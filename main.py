@@ -560,6 +560,7 @@ def ask():
 		answer = ''
 		answered = 0
 
+	question_ls.sort(key=lambda tup: tup[5], reverse=True)
 	question_ls.sort(key=lambda tup: tup[6], reverse=True)
 
 	if get_filter == "candidate":
