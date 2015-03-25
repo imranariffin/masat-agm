@@ -500,6 +500,7 @@ def ask():
 					 "fb":insert_fb,
 					 "fb_asker":get_fb_asker,
 					 "date":str(date.today()),
+					 "score":0
 					  })
 
 	get_answer = request.forms.answer
