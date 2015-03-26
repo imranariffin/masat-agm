@@ -430,28 +430,71 @@ def manifesto():
 		if not fb_id:
 			logging_err = True
 
-	# for doc in new_c:
-	# 	manifest = doc['manifesto']
-	# 	for i in manifest:
-	# 		if i[2] == get_id:
-	# 			i[1] += 1
-	# 	man.update({'_id':doc['_id']}, {"$set":doc})
-
 	cursor = man.find()
 
+	rank_ls = []
+	man_score = 0
 	for doc in cursor:
 		manifest = doc['manifesto']
 		for i in manifest:
 			if i[0] not in ['1','2','3']:
 				i.append(doc['position'])
+				i.append(doc['name'])
 				ls.append(i)
+			man_score += i[1]
+		rank_ls.append([doc['name'], doc['position'], man_score])
+		man_score = 0
+
+	# for rank in rank_ls:
+	# 	print rank
+
+	pos_ls = man.distinct("position")
+
+	high_rank_dict = {}
+	prev = 0
+	for pos in pos_ls:
+		for rank in rank_ls:
+			if pos == rank[1]:
+				if rank[2] > prev:
+					high_rank_dict[pos] = [rank[0], rank[2]]
+					prev = rank[2]
+		prev = 0
+
+	r = []
+	for key in high_rank_dict:
+		if key == 'President':
+			r.append([key, high_rank_dict[key][0], high_rank_dict[key][1], 0])
+		elif key == 'VP':
+			r.append(['Vice President', high_rank_dict[key][0], high_rank_dict[key][1], 1])
+		elif key == 'Secretary':
+			r.append([key, high_rank_dict[key][0], high_rank_dict[key][1], 2])
+		elif key == 'Treasurer':
+			r.append([key, high_rank_dict[key][0], high_rank_dict[key][1], 3])
+		elif key == 'Sports':
+			r.append(['Sports Officer', high_rank_dict[key][0], high_rank_dict[key][1], 4])
+		elif key == 'Media':
+			r.append(['Media Officer', high_rank_dict[key][0], high_rank_dict[key][1], 5])
+		elif key == 'PR':
+			r.append(['PR Officer', high_rank_dict[key][0], high_rank_dict[key][1], 6])
+		elif key == 'Cultural':
+			r.append(['Cultural Affair Officer', high_rank_dict[key][0], high_rank_dict[key][1], 7])
+		elif key == 'YearRep4':
+			r.append(['4th Year Rep.', high_rank_dict[key][0], high_rank_dict[key][1], 8])
+		elif key == 'YearRep3':
+			r.append(['3rd Year Rep.', high_rank_dict[key][0], high_rank_dict[key][1], 9])
+		elif key == 'YearRep2':
+			r.append(['2nd Year Rep.', high_rank_dict[key][0], high_rank_dict[key][1], 10])
 
 	ls.sort(key=lambda tup: tup[1], reverse=True)
+	r.sort(key=lambda tup:tup[3], reverse=False)
+
+	# Code to add manifesto infographics
 
 	client.close()
 	return template('views/manifesto.html', page="manifesto", 
 											ls=ls, 
-											logging_err=logging_err)
+											logging_err=logging_err,
+											r=r)
 
 from datetime import date
 
