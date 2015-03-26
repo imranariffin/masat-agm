@@ -419,7 +419,7 @@ def manifesto():
 				existing_voter = True
 
 		if not existing_voter and fb_id:
-			upvotes.insert({"username":fb_id, "vote_id":get_id[:25]})
+			upvotes.insert({"username":fb_id, "vote_id":get_id[:25], "cookie":eat_cookies()})
 			get_index = int(get_id[:1])
 			new_c = man.find({"_id":ObjectId(get_sid)})
 		
