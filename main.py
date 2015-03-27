@@ -679,13 +679,19 @@ def admin():
 		if fb_id in admin_id:
 			ask_cursor_del = ask.find({'_id':ObjectId(get_qid)})
 			for doc in ask_cursor_del:
+				answer = ''
+				try:
+					answer = doc['answer']
+				except:
+					pass
 				removed.insert({"candidate":doc['candidate'],
 							 "question":doc['question'],
 							 "cookie":eat_cookies(),
-							 "answer":doc_answer,
+							 "answer":answer,
 							 "deleter_fb":fb_id,
 							 "date":est_time()
 							  })
+				answer = ''
 			db.ask.remove({'_id':ObjectId(get_qid)})
 
 	get_answer = request.forms.answer
