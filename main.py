@@ -496,7 +496,7 @@ def manifesto():
 											logging_err=logging_err,
 											r=r)
 
-from datetime import date
+from helper import *
 
 @route("/ask", method="GET")
 @route("/ask", method="POST")
@@ -543,7 +543,7 @@ def ask():
 					 "cookie":eat_cookies(),
 					 "fb":insert_fb,
 					 "fb_asker":get_fb_asker,
-					 "date":str(date.today()),
+					 "date":est_time(),
 					 "score":0,
 					 "likes":[]
 					  })
@@ -554,7 +554,7 @@ def ask():
 		ask_cursor_3 = ask.find({'_id':ObjectId(get_aid)})
 		for doc in ask_cursor_3:
 			doc['answer'] = get_answer
-			doc['date'] = str(date.today())
+			doc['date'] = est_time()
 			ask.update({'_id':doc['_id']}, {"$set":doc})
 
 	get_filter = request.query.filter
