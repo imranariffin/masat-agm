@@ -214,7 +214,7 @@ def vote():
 					  "yrep3":str(get_yrep3),
 					  "yrep2":str(get_yrep2),
 					  "cookie":cookie,
-					  "browser":browser_info
+					  "browser":browser_info()
 					  })
 		cookies.insert({"cookie":cookie})
 
@@ -430,7 +430,7 @@ def manifesto():
 			upvotes.insert({"username":fb_id, 
 							"vote_id":get_id[:25], 
 							"cookie":eat_cookies(),
-							"browser":browser_info})
+							"browser":browser_info()})
 			get_index = int(get_id[:1])
 			new_c = man.find({"_id":ObjectId(get_sid)})
 		
@@ -556,7 +556,7 @@ def ask():
 					 "date":est_time(),
 					 "score":0,
 					 "likes":[],
-					 "browser_info":browser_info
+					 "browser_info":browser_info()
 					  })
 
 	get_answer = request.forms.answer
