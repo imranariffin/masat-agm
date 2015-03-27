@@ -31,6 +31,12 @@ from pymongo import MongoClient
 # 	entity = dumps(entity)
 # 	return entity
 
+import httpagentparser
+
+def browser_info():
+	s = request.environ.get('HTTP_USER_AGENT')
+	return httpagentparser.simple_detect(s)
+
 @route("/", method="GET")
 def main():
 	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
@@ -207,7 +213,8 @@ def vote():
 					  "yrep4":str(get_yrep4),
 					  "yrep3":str(get_yrep3),
 					  "yrep2":str(get_yrep2),
-					  "cookie":cookie
+					  "cookie":cookie,
+					  "browser":browser_info
 					  })
 		cookies.insert({"cookie":cookie})
 
@@ -420,7 +427,10 @@ def manifesto():
 				existing_voter = True
 
 		if not existing_voter and fb_id:
-			upvotes.insert({"username":fb_id, "vote_id":get_id[:25], "cookie":eat_cookies()})
+			upvotes.insert({"username":fb_id, 
+							"vote_id":get_id[:25], 
+							"cookie":eat_cookies(),
+							"browser":browser_info})
 			get_index = int(get_id[:1])
 			new_c = man.find({"_id":ObjectId(get_sid)})
 		
@@ -545,7 +555,8 @@ def ask():
 					 "fb_asker":get_fb_asker,
 					 "date":est_time(),
 					 "score":0,
-					 "likes":[]
+					 "likes":[],
+					 "browser_info":browser_info
 					  })
 
 	get_answer = request.forms.answer
