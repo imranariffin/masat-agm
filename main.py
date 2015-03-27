@@ -4,6 +4,7 @@ import bottle
 import os
 import random
 from bson.json_util import dumps
+from helper import *
 
 from uuid import uuid4
 
@@ -496,8 +497,7 @@ def manifesto():
 											logging_err=logging_err,
 											r=r)
 
-from helper import *
-
+from collections import Counter
 @route("/ask", method="GET")
 @route("/ask", method="POST")
 def ask():
@@ -630,13 +630,25 @@ def ask():
 
 	new_q_ls.sort(key=lambda tup: tup[0], reverse=True)
 
+	# get candidate names and questions asked
+	q_asked = []
+	q_name = [i[0] for i in question_ls]
+
+	c = Counter(q_name)
+	for i in candidate_ls:
+		q_asked.append([i, c[i]])
+
+	q_asked.sort(key=lambda tup: tup[1], reverse=True)
+
+
 	client.close()
 	return template('views/ask.html', page="ask", 
 									  candidate_ls=candidate_ls,
 									  question_ls=question_ls,
 									  access=access,
 									  new_q_ls=new_q_ls,
-									  u=get_u)
+									  u=get_u,
+									  q_asked=q_asked)
 
 @route("/admin", method="GET")
 @route("/admin", method="POST")
@@ -645,6 +657,7 @@ def admin():
 	db = client.get_default_database()
 	man = db['man']
 	ask = db['ask']
+	removed = db['removed']
 	candidate_ls = man.distinct("name")
 
 	question_ls = []
@@ -664,6 +677,15 @@ def admin():
 	doc_to_del = False
 	if get_qid:
 		if fb_id in admin_id:
+			ask_cursor_del = ask.find({'_id':ObjectId(get_qid)})
+			for doc in ask_cursor_del:
+				removed.insert({"candidate":doc['candidate'],
+							 "question":doc['question'],
+							 "cookie":eat_cookies(),
+							 "answer":doc_answer,
+							 "deleter_fb":fb_id,
+							 "date":est_time()
+							  })
 			db.ask.remove({'_id':ObjectId(get_qid)})
 
 	get_answer = request.forms.answer

@@ -4,8 +4,6 @@
 
 <div class="container">
 
-    <script src="js/fb.min.js"></script>
-
     <div class="row">
       <div class="col-md-8">
         <h2>#AskCandidate</h2>
@@ -39,6 +37,48 @@
         </div>
         <button type="submit" name="fb_asker" class="btn btn-primary">Ask</button>
       </form>
+    </div>
+  </div>
+
+  <br>
+  <br>
+
+  <div class="row">
+    <div class="col-md-11">
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+        NEW! See question stats
+      </button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Stats</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table table-hover">
+                <tr>
+                  <th>Candidates</th>
+                  <th>Number of questions asked</th>
+                </tr>
+                % for q in q_asked:
+                <tr>
+                  <td>{{q[0]}}</td>
+                  <td>{{q[1]}}</td>
+                </tr>
+                % end
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -207,5 +247,4 @@
 
 </div>
 
-</body>
-</html>
+%include views/shared/footer.html
