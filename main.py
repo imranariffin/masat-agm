@@ -506,6 +506,7 @@ def ask():
 	man = db['man']
 	ask = db['ask']
 	candidate_ls = man.distinct("name")
+	candidate_ls.sort(key=lambda tup: tup[0], reverse=False)
 
 	question_ls = []
 
@@ -553,9 +554,11 @@ def ask():
 		ask_cursor_3 = ask.find({'_id':ObjectId(get_aid)})
 		for doc in ask_cursor_3:
 			doc['answer'] = get_answer
+			doc['date'] = str(date.today())
 			ask.update({'_id':doc['_id']}, {"$set":doc})
 
 	get_filter = request.query.filter
+	get_u = request.query.u
 
 	# Implementing Voting System for Q and A
 	get_vvid = str(request.forms.vid)
@@ -632,7 +635,8 @@ def ask():
 									  candidate_ls=candidate_ls,
 									  question_ls=question_ls,
 									  access=access,
-									  new_q_ls=new_q_ls)
+									  new_q_ls=new_q_ls,
+									  u=get_u)
 
 @route("/admin", method="GET")
 @route("/admin", method="POST")

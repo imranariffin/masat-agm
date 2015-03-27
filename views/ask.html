@@ -24,7 +24,7 @@
     <br>
 
   <div class="row">
-    <div class="col-md-9">
+    <div class="col-md-10">
       <form class="form-inline" method="post">
         <div class="form-group">
                 <select id="candidates" name="candidates" class="form-control">
@@ -40,70 +40,170 @@
         <button type="submit" name="fb_asker" class="btn btn-primary">Ask</button>
       </form>
     </div>
-    <div class="col-md-1">
-      <!-- Small button group -->
-      <div class="btn-group">
-        <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-          Filter by <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-          <li><a href="/ask?filter=candidate">Candidate</a></li>
-          <li><a href="/ask?filter=answered">Answered</a></li>
-          <li><a href="/ask?filter=unanswered">Unanswered</a></li>
-        </ul>
-      </div>
-    </div>
   </div>
 
   <br>
   <br>
 
-    <div class="row">
-      <div class="col-md-11">
-        % for the_questions in new_q_ls:
-          <h3>{{the_questions[0]}}</h3>
-          <table class="table table-hover">
-          % for question in the_questions[1]:
-            <tr>
-              <td>
-                <form action="" method="post">
-                  <button class="btn btn-primary btn-xs" name="vid" value="v{{question[3]}}">like <span class="badge">{{question[6]}}</span></button>
-                </form>
-              </td>
-              <td>
-                <p>Question for <b>{{question[0]}}</b></p>
-                </td>
-              <td>
-                <p class="question">Q: {{question[1]}}</p>
-                % if question[2]:
-                <p class="answer">A: {{ question[2] }}</p>
-                % end
-                % if question[3] == access:
-                <form action="" method="post">
-                  <div class="input-group">
-                        <input type="text" class="form-control" name="answer" placeholder="Answer">
-                        <input type="hidden" name="aid" value="{{access}}">
-                        <span class="input-group-btn">
-                          <button class="btn btn-default" type="submit">Answer</button>
-                        </span>
-                      </div><!-- /input-group -->
-                </form>
-                % end
-              </td>
-              <td>
-                <form action="" method="post">
-                  <button class="btn btn-default btn-xs" name="qid" value="{{question[3]}}">answer</button>
-                </form>
-              </td>
-            </tr>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    % if not u:
+      <li role="presentation" class="active"><a href="#answered" aria-controls="answered" role="tab" data-toggle="tab">Answered</a></li>
+      <li role="presentation"><a href="#unanswered" aria-controls="unanswered" role="tab" data-toggle="tab">Unanswered</a></li>
+    % else:
+      <li role="presentation"><a href="#answered" aria-controls="answered" role="tab" data-toggle="tab">Answered</a></li>
+      <li role="presentation" class="active"><a href="#unanswered" aria-controls="unanswered" role="tab" data-toggle="tab">Unanswered</a></li>
+    % end
+  </ul>
+
+  <!-- Tab panes -->
+        <div class="tab-content">
+          % if not u:
+          <div role="tabpanel" class="tab-pane active" id="answered">
+          % else:
+          <div role="tabpanel" class="tab-pane" id="answered">
           % end
-          </table>
-        % end
-      </div>
-  </div>
+            % for the_questions in new_q_ls:
+              <h3>{{the_questions[0]}}</h3>
+              <table class="table table-hover">
+              % for question in the_questions[1]:
+                % if question[5]:
+                <tr>
+                  <td>
+                    <form action="" method="post">
+                      <button class="btn btn-primary btn-xs" name="vid" value="v{{question[3]}}">like <span class="badge">{{question[6]}}</span></button>
+                    </form>
+                  </td>
+                  <td>
+                    <p>Question for <b>{{question[0]}}</b></p>
+                    </td>
+                  <td>
+                    <p class="question">Q: {{question[1]}}</p>
+                    % if question[2]:
+                    <p class="answer">A: {{ question[2] }}</p>
+                    % end
+                    % if question[3] == access:
+                    <form action="" method="post">
+                      <div class="input-group">
+                            <input type="text" class="form-control" name="answer" placeholder="Answer">
+                            <input type="hidden" name="aid" value="{{access}}">
+                            <span class="input-group-btn">
+                              <button class="btn btn-default" type="submit">Answer</button>
+                            </span>
+                          </div><!-- /input-group -->
+                    </form>
+                    % end
+                  </td>
+                  <td>
+                    <form action="" method="post">
+                      <button class="btn btn-default btn-xs" name="qid" value="{{question[3]}}">answer</button>
+                    </form>
+                  </td>
+                </tr>
+                % end
+              % end
+              </table>
+            % end
+          </div>
 
+          % if u:
+          <div role="tabpanel" class="tab-pane active" id="unanswered">
+          % else:
+          <div role="tabpanel" class="tab-pane" id="unanswered">
+          % end
 
+          <br>
 
+            <div class="btn-group">
+              <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                Filter by <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                % for name in candidate_ls:
+                    <li><a href="/ask?u={{name}}">{{name}}</a></li>
+                % end
+              </ul>
+            </div>
+
+            % for the_questions in new_q_ls:
+              <h3>{{the_questions[0]}}</h3>
+              <table class="table table-hover">
+              % for question in the_questions[1]:
+                % if not question[5]:
+                  % if u and u == question[0]:
+                    <tr>
+                      <td>
+                        <form action="" method="post">
+                          <button class="btn btn-primary btn-xs" name="vid" value="v{{question[3]}}">like <span class="badge">{{question[6]}}</span></button>
+                        </form>
+                      </td>
+                      <td>
+                        <p>Question for <b>{{question[0]}}</b></p>
+                        </td>
+                      <td>
+                        <p class="question">Q: {{question[1]}}</p>
+                        % if question[2]:
+                        <p class="answer">A: {{ question[2] }}</p>
+                        % end
+                        % if question[3] == access:
+                        <form action="" method="post">
+                          <div class="input-group">
+                                <input type="text" class="form-control" name="answer" placeholder="Answer">
+                                <input type="hidden" name="aid" value="{{access}}">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-default" type="submit">Answer</button>
+                                </span>
+                              </div><!-- /input-group -->
+                        </form>
+                        % end
+                      </td>
+                      <td>
+                        <form action="" method="post">
+                          <button class="btn btn-default btn-xs" name="qid" value="{{question[3]}}">answer</button>
+                        </form>
+                      </td>
+                    </tr>
+                  % elif not u:
+                    <tr>
+                      <td>
+                        <form action="" method="post">
+                          <button class="btn btn-primary btn-xs" name="vid" value="v{{question[3]}}">like <span class="badge">{{question[6]}}</span></button>
+                        </form>
+                      </td>
+                      <td>
+                        <p>Question for <b>{{question[0]}}</b></p>
+                        </td>
+                      <td>
+                        <p class="question">Q: {{question[1]}}</p>
+                        % if question[2]:
+                        <p class="answer">A: {{ question[2] }}</p>
+                        % end
+                        % if question[3] == access:
+                        <form action="" method="post">
+                          <div class="input-group">
+                                <input type="text" class="form-control" name="answer" placeholder="Answer">
+                                <input type="hidden" name="aid" value="{{access}}">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-default" type="submit">Answer</button>
+                                </span>
+                              </div><!-- /input-group -->
+                        </form>
+                        % end
+                      </td>
+                      <td>
+                        <form action="" method="post">
+                          <button class="btn btn-default btn-xs" name="qid" value="{{question[3]}}">answer</button>
+                        </form>
+                      </td>
+                    </tr>
+                  % end
+
+                % end
+              % end
+              </table>
+            % end
+          </div>
+        </div>
 
 </div>
 
