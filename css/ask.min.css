@@ -1,1 +1,1 @@
-.question{color:#333}.answer{color:#76797c}
+.question{color:#333}.answer{color:#76797c}.mobileShow{display:none}@media only screen and (min-device-width :320px)and (max-device-width :480px){.mobileShow{display:inline}}

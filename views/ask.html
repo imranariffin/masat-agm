@@ -4,6 +4,19 @@
 
 <div class="container">
 
+  <style>
+    .mobileShow { display: none;}
+       /* Smartphone Portrait and Landscape */
+       @media only screen
+       and (min-device-width : 320px)
+       and (max-device-width : 480px){ .mobileShow { display: inline;}
+    }
+  </style>
+
+  <div id="top" class="mobileShow">
+  <p>If you are on mobile, <a href="#askcandidate">click here</a> to ask question</p>
+  </div>
+
   <div class="row">
     <div class="col-md-9">
 
@@ -148,9 +161,9 @@
       </div> <!-- col-md-8 -->
 
       <div class="col-md-3">
-
+        
         <div class="row">
-        <h2>#AskCandidate <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button></h2>
+        <h2 id="askcandidate">#AskCandidate <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button></h2>
           <div id="status"></div>
 
           <p>Candidate: You need to log in with Facebook to answer the questions.</p>
@@ -158,6 +171,10 @@
         </div>
 
         <br>
+
+        <div class="mobileShow">
+        <p><a href="#top">Back to top</a></p>
+        </div>
 
         <div class="row">
             <form method="post">
