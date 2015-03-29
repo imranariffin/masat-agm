@@ -672,7 +672,7 @@ def ask():
 		q_asked.append([i, c[i], str_q])
 		man_for_q = []
 
-	q_asked.sort(key=lambda tup: tup[1], reverse=True)
+	q_asked.sort(key=lambda tup: tup[1], reverse=False)
 
 	client.close()
 	return template('views/ask.html', page="ask",
