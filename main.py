@@ -21,6 +21,21 @@ def server_static(filepath):
 import pymongo
 from pymongo import MongoClient
 
+from bson.json_util import dumps
+from bson import json_util
+
+@route('/ask.json')
+def ask_json():
+	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
+	db = client.get_default_database()
+	ask = db['ask']
+	doc = ask.find()
+	return dumps(doc, sort_keys=True, indent=4, default=json_util.default)
+
+@route('/test')
+def test():
+	return template('views/test.html')
+
 # @route('/api', method='GET')
 # def get_like():
 # 	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
@@ -93,7 +108,7 @@ def main():
 	random.shuffle(ls_yrep3)
 	random.shuffle(ls_yrep2)
 
-	return template('views/index.html', ls_pres=ls_pres, 
+	return template('views/index.html', ls_pres=ls_pres,
 								  ls_vp=ls_vp,
 								  ls_sec=ls_sec,
 								  ls_treas=ls_treas,
@@ -109,13 +124,13 @@ def main():
 @route("/vote", method="GET")
 @route("/vote", method="POST")
 def vote():
-	access_code = ['ABC123', 
-				   'ABC456', 
-				   'ABC789', 
-				   'ZAHIR', 
-				   'ZACK', 
-				   'DIN', 
-				   'ANAS', 
+	access_code = ['ABC123',
+				   'ABC456',
+				   'ABC789',
+				   'ZAHIR',
+				   'ZACK',
+				   'DIN',
+				   'ANAS',
 				   'LEH',
 				   'ARIF',
 				   'TEST']
@@ -134,7 +149,7 @@ def vote():
 	get_yrep2 = request.forms.yrep2
 	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
 	db = client.get_default_database()
-	
+
 	man = db['man']
 
 	cursor_man = man.find();
@@ -223,7 +238,7 @@ def vote():
 		return redirect()
 	else:
 		client.close()
-		return template('views/vote.html', ls_pres=ls_pres, 
+		return template('views/vote.html', ls_pres=ls_pres,
 									 ls_vp=ls_vp,
 									 ls_sec=ls_sec,
 									 ls_treas=ls_treas,
@@ -339,7 +354,7 @@ def redirect():
 		# 		secretary_count[s] += 1
 		# except:
 		# 	pass
-	
+
 	pc = []
 	vpc = []
 	sc = []
@@ -388,8 +403,8 @@ def redirect():
 	# yrep2.sort(key=lambda tup: tup[1], reverse=True)
 
 	client.close()
-	return template('views/result.html', pc=pc, 
-								   vpc=vpc, 
+	return template('views/result.html', pc=pc,
+								   vpc=vpc,
 								   sc=sc,
 								   treas=treas,
 								   sports=sports,
@@ -416,7 +431,7 @@ def manifesto():
 	fb_id = get_id[25:]
 
 	logging_err = False
-	
+
 	existing_voter = False
 
 	if get_sid:
@@ -427,13 +442,13 @@ def manifesto():
 				existing_voter = True
 
 		if not existing_voter and fb_id:
-			upvotes.insert({"username":fb_id, 
-							"vote_id":get_id[:25], 
+			upvotes.insert({"username":fb_id,
+							"vote_id":get_id[:25],
 							"cookie":eat_cookies(),
 							"browser":browser_info()})
 			get_index = int(get_id[:1])
 			new_c = man.find({"_id":ObjectId(get_sid)})
-		
+
 			for doc in new_c:
 				doc['manifesto'][get_index][1] += 1
 			man.update({'_id':doc['_id']}, {"$set":doc})
@@ -502,8 +517,8 @@ def manifesto():
 	# Code to add manifesto infographics
 
 	client.close()
-	return template('views/manifesto.html', page="manifesto", 
-											ls=ls, 
+	return template('views/manifesto.html', page="manifesto",
+											ls=ls,
 											logging_err=logging_err,
 											r=r)
 
@@ -577,7 +592,7 @@ def ask():
 	v_fb_id = get_vvid[25:]
 
 	logging_err = False
-	
+
 	existing_voter = False
 
 	if get_vid:
@@ -645,15 +660,22 @@ def ask():
 	q_asked = []
 	q_name = [i[0] for i in question_ls]
 
+	man_for_q = []
 	c = Counter(q_name)
 	for i in candidate_ls:
-		q_asked.append([i, c[i]])
+		man_cursor_2 = man.find({'name':i})
+		for doc in man_cursor_2:
+			for e in doc['manifesto']:
+				if e[0] not in ['1','2','3']:
+					man_for_q.append(e[0])
+		str_q = ', '.join(man_for_q)
+		q_asked.append([i, c[i], str_q])
+		man_for_q = []
 
 	q_asked.sort(key=lambda tup: tup[1], reverse=True)
 
-
 	client.close()
-	return template('views/ask.html', page="ask", 
+	return template('views/ask.html', page="ask",
 									  candidate_ls=candidate_ls,
 									  question_ls=question_ls,
 									  access=access,
@@ -725,10 +747,9 @@ def admin():
 		answer = ''
 
 	client.close()
-	return template('views/admin.html', page="ask", 
+	return template('views/admin.html', page="ask",
 									  candidate_ls=candidate_ls,
 									  question_ls=question_ls,
 									  access=access)
 
 run(host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
-

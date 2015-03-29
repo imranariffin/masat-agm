@@ -1,3 +1,3 @@
 $(function() {
-	$(".admin").text('Admin Panels')
+	$(".admin").text('Admin Panel')
 });

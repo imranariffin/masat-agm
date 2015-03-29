@@ -84,6 +84,44 @@
 
   <br>
   <br>
+      
+
+        <div class="row">
+          <h4>Hover to see manifesto:</h4>
+          <p><i>This section is still buggy. We are working on it.</i></p>
+        </div>
+
+        <div class="row">
+          % for q in q_asked:
+          <div class="col-md-3">
+            <p tabindex="0" data-placement="right" data-container="body" data-toggle="popover" data-trigger="hover" title="{{q[0]}}" data-content="
+            <img src='img/{{q[0]}}.jpg' alt='{{q[0]}}' class='img-responsive img-rounded'>
+              <p>Number of questions asked to this candidate: {{q[1]}}</p>
+              <p>Manifesto: {{q[2]}}</p>
+            ">{{q[0]}}</p>
+          </div>
+          % end
+        </div>
+
+        <style type="text/css">
+          .popover{
+              max-width: none;
+              width:400px; 
+          }
+
+        </style>
+
+        <script type="text/javascript">
+
+                  $(function() {
+                        $('[data-toggle="popover"]').popover({
+                        html: 'true'
+                    });
+                });
+
+        </script>
+  <br>
+  <br>
 
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
