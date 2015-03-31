@@ -1,0 +1,474 @@
+%include views/shared/header.html
+
+<div class="container-fluid">
+
+  <div role="tabpanel">
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="#president" aria-controls="president" role="tab" data-toggle="tab">President</a></li>
+      <li role="presentation"><a href="#vp" aria-controls="vp" role="tab" data-toggle="tab">Vice President</a></li>
+      <li role="presentation"><a href="#secretary" aria-controls="secretary" role="tab" data-toggle="tab">Secretary</a></li>
+      <li role="presentation"><a href="#treasurer" aria-controls="treasurer" role="tab" data-toggle="tab">Treasurer</a></li>
+      <li role="presentation"><a href="#sports" aria-controls="sports" role="tab" data-toggle="tab">Sports Officer</a></li>
+      <li role="presentation"><a href="#media" aria-controls="media" role="tab" data-toggle="tab">Media Officer</a></li>
+      <li role="presentation"><a href="#pr" aria-controls="pr" role="tab" data-toggle="tab">Public Relation Officer</a></li>
+      <li role="presentation"><a href="#cultural" aria-controls="cultural" role="tab" data-toggle="tab">Cultural Affair Officer</a></li>
+      <li role="presentation"><a href="#yearrep4" aria-controls="yearrep4" role="tab" data-toggle="tab">4th Year Rep</a></li>
+      <li role="presentation"><a href="#yearrep3" aria-controls="yearrep3" role="tab" data-toggle="tab">3rd Year Rep</a></li>
+      <li role="presentation"><a href="#yearrep2" aria-controls="yearrep2" role="tab" data-toggle="tab">2nd Year Rep</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="president">
+        <h3>Presidential Candidates</h3>
+        <hr> 
+
+        <div class="row">
+          % for candidate in ls_pres:
+          <div class="col-md-6">
+            <img src="img/{{candidate[0]}}.jpg" class="img-responsive img-rounded" />
+            <div class="row">
+              <div class="col-md-6">
+                <h4>Why {{candidate[0]}}?</h4>
+                <ul class="list-group">
+                  <li class="list-group-item">{{candidate[1]}}</li>
+                </ul>
+              </div>
+              <div class="col-md-6">
+                <h4>Manifesto</h4>
+                <ul class="list-group">
+                  % if candidate[2][0][1] >= 5:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][0][1]}}</span> {{candidate[2][0][0]}} </li>
+                  % if candidate[2][1][1] >= 5:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][1][1]}}</span> {{candidate[2][1][0]}} </li>
+                  % if candidate[2][2][1] >= 5:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][2][1]}}</span> {{candidate[2][2][0]}} </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          % end
+        </div>
+        <br>
+
+      </div>
+      <div role="tabpanel" class="tab-pane" id="vp">
+        <h3>Vice President Candidates</h3>
+        <hr> 
+        <div class="row">
+          % for candidate in ls_vp:
+          <div class="col-md-4">
+            <img src="img/{{candidate[0]}}.jpg" class="img-responsive img-rounded" />
+            <div class="row">
+              <div class="col-md-6">
+                <h4>Why {{candidate[0]}}?</h4>
+                <ul class="list-group">
+                  <li class="list-group-item">{{candidate[1]}}</li>
+                </ul>
+              </div>
+              <div class="col-md-6">
+                <h4>Manifesto</h4>
+                <ul class="list-group">
+                  % if candidate[2][0][1] >= 5:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][0][1]}}</span> {{candidate[2][0][0]}} </li>
+                  % if candidate[2][1][1] >= 5:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][1][1]}}</span> {{candidate[2][1][0]}} </li>
+                  % if candidate[2][2][1] >= 5:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][2][1]}}</span> {{candidate[2][2][0]}} </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          % end
+        </div>
+        <br>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="secretary">
+        <h3>Secretary Candidates</h3>
+        <hr> 
+        <div class="row">
+        <div class="col-md-1"></div>
+          % for candidate in ls_sec:
+          <div class="col-md-2">
+            <img src="img/{{candidate[0]}}.jpg" class="img-responsive img-rounded" />
+            <div class="row">
+              <div class="col-md-12">
+                <h4>Manifesto</h4>
+                <ul class="list-group">
+                  % if candidate[2][0][1] >= 5:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][0][1]}}</span> {{candidate[2][0][0]}} </li>
+                  % if candidate[2][1][1] >= 5:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][1][1]}}</span> {{candidate[2][1][0]}} </li>
+                  % if candidate[2][2][1] >= 5:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][2][1]}}</span> {{candidate[2][2][0]}} </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          % end
+        </div>
+        <br>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="treasurer">
+        <h3>Treasurer Candidates</h3>
+        <hr> 
+        <div class="row">
+          % for candidate in ls_treas:
+          <div class="col-md-2">
+            <img src="img/{{candidate[0]}}.jpg" class="img-responsive img-rounded" />
+            <div class="row">
+              <div class="col-md-12">
+                <h4>Manifesto</h4>
+                <ul class="list-group">
+                  % if candidate[2][0][1] >= 5:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][0][1]}}</span> {{candidate[2][0][0]}} </li>
+                  % if candidate[2][1][1] >= 5:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][1][1]}}</span> {{candidate[2][1][0]}} </li>
+                  % if candidate[2][2][1] >= 5:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][2][1]}}</span> {{candidate[2][2][0]}} </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          % end
+        </div>
+        <br>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="sports">
+        <h3>Sports Officer Candidates</h3>
+        <hr> 
+        <div class="row">
+          % for candidate in ls_sport:
+          <div class="col-md-6">
+            <img src="img/{{candidate[0]}}.jpg" class="img-responsive img-rounded" />
+            <div class="row">
+              <div class="col-md-6">
+                <h4>Why {{candidate[0]}}?</h4>
+                <ul class="list-group">
+                  <li class="list-group-item">{{candidate[1]}}</li>
+                </ul>
+              </div>
+              <div class="col-md-6">
+                <h4>Manifesto</h4>
+                <ul class="list-group">
+                  % if candidate[2][0][1] >= 5:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][0][1]}}</span> {{candidate[2][0][0]}} </li>
+                  % if candidate[2][1][1] >= 5:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][1][1]}}</span> {{candidate[2][1][0]}} </li>
+                  % if candidate[2][2][1] >= 5:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][2][1]}}</span> {{candidate[2][2][0]}} </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          % end
+        </div>
+        <br>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="media">
+        <h3>Media Officer Candidates</h3>
+        <hr> 
+        <div class="row">
+          % for candidate in ls_media:
+          <div class="col-md-6">
+            <img src="img/{{candidate[0]}}.jpg" class="img-responsive img-rounded" />
+            <div class="row">
+              <div class="col-md-6">
+                <h4>Why {{candidate[0]}}?</h4>
+                <ul class="list-group">
+                  <li class="list-group-item">{{candidate[1]}}</li>
+                </ul>
+              </div>
+              <div class="col-md-6">
+                <h4>Manifesto</h4>
+                <ul class="list-group">
+                  % if candidate[2][0][1] >= 5:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][0][1]}}</span> {{candidate[2][0][0]}} </li>
+                  % if candidate[2][1][1] >= 5:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][1][1]}}</span> {{candidate[2][1][0]}} </li>
+                  % if candidate[2][2][1] >= 5:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][2][1]}}</span> {{candidate[2][2][0]}} </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          % end
+        </div>
+        <br>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="pr">
+        <h3>Public Relation Officer Candidates</h3>
+        <hr> 
+        <div class="row">
+          % for candidate in ls_pr:
+          <div class="col-md-6">
+            <img src="img/{{candidate[0]}}.jpg" class="img-responsive img-rounded" />
+            <div class="row">
+              <div class="col-md-12">
+                <h4>Why {{candidate[0]}}?</h4>
+                <ul class="list-group">
+                  <li class="list-group-item">{{candidate[1]}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          % end
+        </div>
+        <br>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="cultural">
+        <h3>Cultural Affair Candidates</h3>
+        <hr> 
+        <div class="row">
+          % for candidate in ls_cul:
+          <div class="col-md-6">
+            <img src="img/{{candidate[0]}}.jpg" class="img-responsive img-rounded" />
+            <div class="row">
+              <div class="col-md-6">
+                <h4>Why {{candidate[0]}}?</h4>
+                <ul class="list-group">
+                  <li class="list-group-item">{{candidate[1]}}</li>
+                </ul>
+              </div>
+              <div class="col-md-6">
+                <h4>Manifesto</h4>
+                <ul class="list-group">
+                  % if candidate[2][0][1] >= 5:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][0][1]}}</span> {{candidate[2][0][0]}} </li>
+                  % if candidate[2][1][1] >= 5:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][1][1]}}</span> {{candidate[2][1][0]}} </li>
+                  % if candidate[2][2][1] >= 5:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][2][1]}}</span> {{candidate[2][2][0]}} </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          % end
+        </div>
+        <br>
+      </div>
+
+      <div role="tabpanel" class="tab-pane" id="yearrep4">
+        <h3>4th Year Representatives Candidates</h3>
+        <hr> 
+        <div class="row">
+          % for candidate in ls_yrep4:
+          <div class="col-md-6">
+            <img src="img/{{candidate[0]}}.jpg" class="img-responsive img-rounded" />
+            <div class="row">
+              <div class="col-md-6">
+                <h4>Why {{candidate[0]}}?</h4>
+                <ul class="list-group">
+                  <li class="list-group-item">{{candidate[1]}}</li>
+                </ul>
+              </div>
+              <div class="col-md-6">
+                <h4>Manifesto</h4>
+                <ul class="list-group">
+                  % if candidate[2][0][1] >= 5:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][0][1]}}</span> {{candidate[2][0][0]}} </li>
+                  % if candidate[2][1][1] >= 5:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][1][1]}}</span> {{candidate[2][1][0]}} </li>
+                  % if candidate[2][2][1] >= 5:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][2][1]}}</span> {{candidate[2][2][0]}} </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          % end
+        </div>
+        <br>
+      </div>
+
+      <div role="tabpanel" class="tab-pane" id="yearrep3">
+        <h3>3rd Year Representatives Candidates</h3>
+        <hr> 
+        <div class="row">
+          % for candidate in ls_yrep3:
+          <div class="col-md-4">
+            <img src="img/{{candidate[0]}}.jpg" class="img-responsive img-rounded" />
+            <div class="row">
+              <div class="col-md-6">
+                <h4>Why {{candidate[0]}}?</h4>
+                <ul class="list-group">
+                  <li class="list-group-item">{{candidate[1]}}</li>
+                </ul>
+              </div>
+              <div class="col-md-6">
+                <h4>Manifesto</h4>
+                <ul class="list-group">
+                  % if candidate[2][0][1] >= 5:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][0][1]}}</span> {{candidate[2][0][0]}} </li>
+                  % if candidate[2][1][1] >= 5:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][1][1]}}</span> {{candidate[2][1][0]}} </li>
+                  % if candidate[2][2][1] >= 5:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][2][1]}}</span> {{candidate[2][2][0]}} </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          % end
+        </div>
+        <br>
+      </div>
+
+      <div role="tabpanel" class="tab-pane" id="yearrep2">
+        <h3>2nd Year Representatives Candidates</h3>
+        <hr> 
+        <div class="row">
+          % for candidate in ls_yrep2:
+          <div class="col-md-4">
+            <img src="img/{{candidate[0]}}.jpg" class="img-responsive img-rounded" />
+            <div class="row">
+              <div class="col-md-6">
+                <h4>Why {{candidate[0]}}?</h4>
+                <ul class="list-group">
+                  <li class="list-group-item">{{candidate[1]}}</li>
+                </ul>
+              </div>
+              <div class="col-md-6">
+                <h4>Manifesto</h4>
+                <ul class="list-group">
+                  % if candidate[2][0][1] >= 5:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][0][1]}}</span> {{candidate[2][0][0]}} </li>
+                  % if candidate[2][1][1] >= 5:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][1][1]}}</span> {{candidate[2][1][0]}} </li>
+                  % if candidate[2][2][1] >= 5:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][2][1]}}</span> {{candidate[2][2][0]}} </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          % end
+        </div>
+        <br>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+%include views/shared/footer.html

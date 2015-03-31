@@ -58,7 +58,12 @@
                 <li>
               % end
               <a href="/ask">#AskCandidate</a></li>
-              <li><a href="http://masatoronto.blogspot.ca">MASAT Blog</a></li>
+              % if page == "april2":
+                <li class="active">
+              % else:
+                <li>
+              % end
+              <li><a href="/april2">April 2</a></li>
             </li>
           </ul>
         </div><!-- /.navbar-collapse -->

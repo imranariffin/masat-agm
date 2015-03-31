@@ -1,5 +1,16 @@
 /* General */
 
+.nav-tabs > li, .nav-pills > li {
+    float:none;
+    display:inline-block;
+    *display:inline; /* ie7 fix */
+     zoom:1; /* hasLayout ie7 trigger */
+}
+
+.nav-tabs, .nav-pills {
+    text-align:center;
+}
+
 @media only screen and (max-width: 735px) and (max-device-width: 768px) {
     .main-wrapper {
         min-width: 100%;

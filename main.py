@@ -52,6 +52,75 @@ def browser_info():
 	s = request.environ.get('HTTP_USER_AGENT')
 	return httpagentparser.simple_detect(s)
 
+@route("/april2", method="GET")
+def main():
+	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
+	db = client.get_default_database()
+	man = db['man']
+
+	cursor = man.find();
+
+	ls_pres = []
+	ls_vp = []
+	ls_sec = []
+	ls_treas = []
+	ls_sport = []
+	ls_media = []
+	ls_pr = []
+	ls_cul = []
+	ls_yrep4 = []
+	ls_yrep3 = []
+	ls_yrep2 = []
+
+	for doc in cursor:
+		if doc['position'] == "President":
+			ls_pres.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
+		elif doc['position'] == "VP":
+			ls_vp.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
+		elif doc['position'] == "Secretary":
+			ls_sec.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
+		elif doc['position'] == "Treasurer":
+			ls_treas.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
+		elif doc['position'] == "Sports":
+			ls_sport.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
+		elif doc['position'] == "Media":
+			ls_media.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
+		elif doc['position'] == "PR":
+			ls_pr.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
+		elif doc['position'] == "Cultural":
+			ls_cul.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
+		elif doc['position'] == "YearRep4":
+			ls_yrep4.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
+		elif doc['position'] == "YearRep3":
+			ls_yrep3.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
+		elif doc['position'] == "YearRep2":
+			ls_yrep2.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
+
+	random.shuffle(ls_pres)
+	random.shuffle(ls_vp)
+	random.shuffle(ls_sec)
+	random.shuffle(ls_treas)
+	random.shuffle(ls_sport)
+	random.shuffle(ls_media)
+	random.shuffle(ls_pr)
+	random.shuffle(ls_cul)
+	random.shuffle(ls_yrep4)
+	random.shuffle(ls_yrep3)
+	random.shuffle(ls_yrep2)
+
+	return template('views/april2.html', ls_pres=ls_pres,
+								  ls_vp=ls_vp,
+								  ls_sec=ls_sec,
+								  ls_treas=ls_treas,
+								  ls_sport=ls_sport,
+								  ls_media=ls_media,
+								  ls_pr=ls_pr,
+								  ls_cul=ls_cul,
+								  ls_yrep4=ls_yrep4,
+								  ls_yrep3=ls_yrep3,
+								  ls_yrep2=ls_yrep2,
+								  page="april2")
+
 @route("/", method="GET")
 def main():
 	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
