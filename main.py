@@ -14,7 +14,7 @@ def eat_cookies():
 	return cookie_id
 
 #specifying the path for the files
-@route('/<filepath:path>')
+@route('/static/<filepath:path>')
 def server_static(filepath):
 	return static_file(filepath, root='.')
 
@@ -24,12 +24,40 @@ from pymongo import MongoClient
 from bson.json_util import dumps
 from bson import json_util
 
+@route("/man")
+def get_all_man():
+	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
+	db = client.get_default_database()
+	man = db['man']
+	doc = man.find()
+	return dumps(doc, sort_keys=True, indent=4, default=json_util.default)
+
+@route("/man/<vote_id>")
+def get_one_man(vote_id):
+	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
+	db = client.get_default_database()
+	man = db['man']
+	cursor = man.find()
+	target = []
+	for doc in cursor:
+		for e in doc['manifesto']:
+			if e[2] == vote_id:
+				target = doc
+	return dumps(target, sort_keys=True, indent=4, default=json_util.default)
+
+@route("/mbuilder")
+def man_builder():
+
+	return template('views/mbuilder.html',
+					page="mbuilder")
+
 @route('/ask.json')
 def ask_json():
 	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
 	db = client.get_default_database()
 	ask = db['ask']
 	doc = ask.find()
+	client.close()
 	return dumps(doc, sort_keys=True, indent=4, default=json_util.default)
 
 @route('/test')
@@ -52,7 +80,7 @@ def browser_info():
 	s = request.environ.get('HTTP_USER_AGENT')
 	return httpagentparser.simple_detect(s)
 
-@route("/april2", method="GET")
+@route("/slide", method="GET")
 def main():
 	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
 	db = client.get_default_database()
@@ -108,7 +136,7 @@ def main():
 	random.shuffle(ls_yrep3)
 	random.shuffle(ls_yrep2)
 
-	return template('views/april2.html', ls_pres=ls_pres,
+	return template('views/slide.html', ls_pres=ls_pres,
 								  ls_vp=ls_vp,
 								  ls_sec=ls_sec,
 								  ls_treas=ls_treas,
@@ -821,4 +849,4 @@ def admin():
 									  question_ls=question_ls,
 									  access=access)
 
-run(host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
+run(reloader=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))

@@ -6,12 +6,12 @@
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="MASAT AGM 2015">
     <meta property="og:description" content="Another year has gone by and our club has grown another year wiser. Believe it or not, MASAT is already 6 years old! And it's that time of the year again where the current committee members will pass the baton to new hands. This year, the Annual General Meeting (AGM) will be held on April 2nd, 2015.">
-    <meta property="og:image" content="http://www.masat.me/img/masat_agm.jpg">
+    <meta property="og:image" content="http://www.masat.me/static/img/masat_agm.jpg">
     <meta property="fb:app_id" content="1425173781112798" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,800' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="build/css/styles.min.css">
-    <script src="build/js/scripts.min.js"></script>
+    <link rel="stylesheet" href="static/build/css/styles.min.css">
+    <script src="static/build/js/scripts.min.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -52,18 +52,25 @@
                 <li>
               % end
               <a href="/manifesto">Manifesto</a></li>
+              % if page == "mbuilder":
+                <li class="active">
+              % else:
+                <li>
+              % end
+              <li><a href="/mbuilder">MBuilder</a></li>
               % if page == "ask":
                 <li class="active">
               % else:
                 <li>
               % end
               <a href="/ask">#AskCandidate</a></li>
-              % if page == "april2":
+              % if page == "slide":
                 <li class="active">
               % else:
                 <li>
               % end
-              <li><a href="/april2">April 2</a></li>
+              <li><a href="/slide">Slide</a></li>
+
             </li>
           </ul>
         </div><!-- /.navbar-collapse -->
