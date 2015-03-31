@@ -118,13 +118,13 @@ $(function() {
 		dataType: 'json'
 	});
 
-	$(window).scroll(function () {
-	    var threshold = 100;
-	    if ($(window).scrollTop() >= 100)
-	        $('.sidebar').addClass('fixed');
-	    else
-	        $('.sidebar').removeClass('fixed');
-	});
+	// $(window).scroll(function () {
+	//     var threshold = 100;
+	//     if ($(window).scrollTop() >= 100)
+	//         $('.sidebar').addClass('fixed');
+	//     else
+	//         $('.sidebar').removeClass('fixed');
+	// });
 
 });
 
