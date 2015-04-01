@@ -24,6 +24,16 @@ from pymongo import MongoClient
 from bson.json_util import dumps
 from bson import json_util
 
+@route("/vote")
+def man_builder():
+	return template('views/closed.html',
+					page="vote")
+
+@route("/result")
+def man_builder():
+	return template('views/closed.html',
+					page="result")
+
 @route("/man")
 def get_all_man():
 	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
@@ -218,20 +228,9 @@ def main():
 								  ls_yrep2=ls_yrep2,
 								  page="candidates")
 
-@route("/vote", method="GET")
-@route("/vote", method="POST")
+@route("/myvote", method="GET")
+@route("/myvote", method="POST")
 def vote():
-	access_code = ['ABC123',
-				   'ABC456',
-				   'ABC789',
-				   'ZAHIR',
-				   'ZACK',
-				   'DIN',
-				   'ANAS',
-				   'LEH',
-				   'ARIF',
-				   'TEST']
-
 	get_code = request.forms.code
 	get_president = request.forms.president
 	get_vice_president = request.forms.vice_president
@@ -248,6 +247,8 @@ def vote():
 	db = client.get_default_database()
 
 	man = db['man']
+	votes = db['votes']
+	cookies = db['cookies']
 
 	cursor_man = man.find();
 
@@ -287,7 +288,6 @@ def vote():
 		elif doc['position'] == "YearRep2":
 			ls_yrep2.append(doc['name'])
 
-	votes = db['votes']
 	new_cursor = votes.find()
 	code_ls = []
 
@@ -307,10 +307,30 @@ def vote():
 		access = False
 	if get_president and get_vice_president and get_secretary and get_treas and get_sports and get_media and get_pr and get_cul and get_yrep4 and get_yrep3 and get_yrep2:
 		all_filled = True
+	
+	if get_code:
+		if len(get_code) == 6:
+			first = get_code[0]
+			second = get_code[1]
+			third = get_code[2]
+			forth = get_code[3]
+			fifth = get_code[4]
+			sixth = get_code[5]
 
-	cookie = eat_cookies()
-	cookies = db['cookies']
-	has_cookie = cookies.find({'cookie':cookie}).count()
+			if first not in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890':
+				access = False
+			if second not in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ':
+				access = False
+			if third not in '1234567890':
+				access = False
+			if forth not in '13579':
+				access = False
+			if fifth not in '2015':
+				access = False
+			if sixth not in 'zahir':
+				access = False
+		else:
+			access = False
 
 	if access and not blank and all_filled:
 		votes.insert({"code":str(get_code),
@@ -324,11 +344,9 @@ def vote():
 					  "cul":str(get_cul),
 					  "yrep4":str(get_yrep4),
 					  "yrep3":str(get_yrep3),
-					  "yrep2":str(get_yrep2),
-					  "cookie":cookie,
-					  "browser":browser_info()
+					  "yrep2":str(get_yrep2)
 					  })
-		cookies.insert({"cookie":cookie})
+		cookies.insert({"code":get_code, "cookie":eat_cookies()})
 
 		client.close()
 		# return template('index.html',success=True)
@@ -364,7 +382,7 @@ def vote():
 									 all_filled=all_filled,
 									 blank=blank)
 
-@route("/result")
+@route("/resultx")
 def redirect():
 	print_list = []
 	president_count = {}
