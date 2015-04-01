@@ -33,7 +33,7 @@ function callAjax() {
                 });
         },
         complete: function() {
-            setTimeout(callAjax, 2000);
+            setTimeout(callAjax, 1000);
         },
         dataType: 'json',
     });
