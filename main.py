@@ -25,12 +25,12 @@ from bson.json_util import dumps
 from bson import json_util
 
 @route("/vote")
-def man_builder():
+def vote():
 	return template('views/closed.html',
 					page="vote")
 
 @route("/result")
-def man_builder():
+def result():
 	return template('views/closed.html',
 					page="result")
 
@@ -73,16 +73,6 @@ def ask_json():
 @route('/test')
 def test():
 	return template('views/test.html')
-
-# @route('/api', method='GET')
-# def get_like():
-# 	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
-# 	db = client.get_default_database()
-# 	entity = db['man'].find()
-# 	if not entity:
-# 		abort(404, 'No document with id %s' % id)
-# 	entity = dumps(entity)
-# 	return entity
 
 import httpagentparser
 
@@ -349,8 +339,8 @@ def vote():
 		cookies.insert({"code":get_code, "cookie":eat_cookies()})
 
 		client.close()
-		# return template('index.html',success=True)
-		return redirect()
+		return template('views/voted.html', page="result")
+		# return redirect()
 	else:
 		client.close()
 		return template('views/vote.html', ls_pres=ls_pres,
@@ -382,8 +372,162 @@ def vote():
 									 all_filled=all_filled,
 									 blank=blank)
 
+@route("/resultz")
+def resultz():
+	return template('views/resultz.html', page="result")
+
+@route("/resulty")
+def resulty():
+	print_list = []
+	president_count = {}
+	vice_president_count = {}
+	sec_count = {}
+	treas_count = {}
+	sports_count = {}
+	media_count = {}
+	cul_count = {}
+	pr_count = {}
+	yrep4_count = {}
+	yrep3_count = {}
+	yrep2_count = {}
+	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
+	db = client.get_default_database()
+	votes = db['votes']
+
+	cursor = votes.find();
+
+	for doc in cursor:
+		try:
+			if doc['president'] not in president_count:
+				president_count[doc['president']] = 1
+			else:
+				president_count[doc['president']] += 1
+
+			if doc['vice_president'] not in vice_president_count:
+				vice_president_count[doc['vice_president']] = 1
+			else:
+				vice_president_count[doc['vice_president']] += 1
+
+			if doc['secretary'] not in sec_count:
+				sec_count[doc['secretary']] = 1
+			else:
+				sec_count[doc['secretary']] += 1
+
+			if doc['treasurer'] not in treas_count:
+				treas_count[doc['treasurer']] = 1
+			else:
+				treas_count[doc['treasurer']] += 1
+
+			if doc['sports'] not in sports_count:
+				sports_count[doc['sports']] = 1
+			else:
+				sports_count[doc['sports']] += 1
+
+			if doc['media'] not in media_count:
+				media_count[doc['media']] = 1
+			else:
+				media_count[doc['media']] += 1
+
+			if doc['pr'] not in pr_count:
+				pr_count[doc['pr']] = 1
+			else:
+				pr_count[doc['pr']] += 1
+
+			if doc['cul'] not in cul_count:
+				cul_count[doc['cul']] = 1
+			else:
+				cul_count[doc['cul']] += 1
+
+			if doc['yrep4'] not in yrep4_count:
+				yrep4_count[doc['yrep4']] = 1
+			else:
+				yrep4_count[doc['yrep4']] += 1
+
+			if doc['yrep3'] not in yrep3_count:
+				yrep3_count[doc['yrep3']] = 1
+			else:
+				yrep3_count[doc['yrep3']] += 1
+
+			if doc['yrep2'] not in yrep2_count:
+				yrep2_count[doc['yrep2']] = 1
+			else:
+				yrep2_count[doc['yrep2']] += 1
+		except:
+			print "problem"
+
+		# try:
+		# 	s = doc['secretary']
+		# 	if s not in secretary_count:
+		# 		secretary_count[s] = 1
+		# 	else:
+		# 		secretary_count[s] += 1
+		# except:
+		# 	pass
+
+	pc = []
+	vpc = []
+	sc = []
+	treas = []
+	sports = []
+	media = []
+	cul = []
+	pr = []
+	yrep4 = []
+	yrep3 = []
+	yrep2 = []
+
+	for key in president_count:
+		pc.append([key, president_count[key]])
+	for key in vice_president_count:
+		vpc.append([key, vice_president_count[key]])
+	for key in sec_count:
+		sc.append([key, sec_count[key]])
+	for key in treas_count:
+		treas.append([key, treas_count[key]])
+	for key in sports_count:
+		sports.append([key, sports_count[key]])
+	for key in media_count:
+		media.append([key, media_count[key]])
+	for key in cul_count:
+		cul.append([key, cul_count[key]])
+	for key in pr_count:
+		pr.append([key, pr_count[key]])
+	for key in yrep4_count:
+		yrep4.append([key, yrep4_count[key]])
+	for key in yrep3_count:
+		yrep3.append([key, yrep3_count[key]])
+	for key in yrep2_count:
+		yrep2.append([key, yrep2_count[key]])
+
+	full_ls = [{'position':'p','ls':pc},
+			   {'position':'vp','ls':vpc},
+			   {'position':'s','ls':sc},
+			   {'position':'treas','ls':treas},
+			   {'position':'sports','ls':sports},
+			   {'position':'media','ls':media},
+			   {'position':'cul','ls':cul},
+			   {'position':'pr','ls':pr},
+			   {'position':'yrep4','ls':yrep4},
+			   {'position':'yrep3','ls':yrep3},
+			   {'position':'yrep2','ls':yrep2}]
+
+	# pc.sort(key=lambda tup: tup[1], reverse=True)
+	# vpc.sort(key=lambda tup: tup[1], reverse=True)
+	# sc.sort(key=lambda tup: tup[1], reverse=True)
+	# treas.sort(key=lambda tup: tup[1], reverse=True)
+	# sports.sort(key=lambda tup: tup[1], reverse=True)
+	# media.sort(key=lambda tup: tup[1], reverse=True)
+	# cul.sort(key=lambda tup: tup[1], reverse=True)
+	# pr.sort(key=lambda tup: tup[1], reverse=True)
+	# yrep4.sort(key=lambda tup: tup[1], reverse=True)
+	# yrep3.sort(key=lambda tup: tup[1], reverse=True)
+	# yrep2.sort(key=lambda tup: tup[1], reverse=True)
+
+	client.close()
+	return dumps(full_ls, sort_keys=True, indent=4, default=json_util.default)
+
 @route("/resultx")
-def redirect():
+def resultx():
 	print_list = []
 	president_count = {}
 	vice_president_count = {}

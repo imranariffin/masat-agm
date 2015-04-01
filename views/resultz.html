@@ -1,0 +1,71 @@
+%include views/shared/header.html
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Poll Result <small>in real-time</small></h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid text-center">
+        <div class="row">
+            <div class="col-md-2">
+                <h4 >President Results</h4>
+                <div id="p_chart"></div>
+            </div>
+            <div class="col-md-2">
+                <h4>Vice President Results</h4>
+
+                <div id="vp_chart"></div>
+            </div>
+            <div class="col-md-2">
+                <h4>Secretary Results</h4>
+                <div id="s_chart"></div>
+            </div>
+            <div class="col-md-2">
+                <h4>Treasurer Results</h4>
+                <div id="treas_chart"></div>
+            </div>
+            <div class="col-md-2">
+                <h4>Sports Officer Results</h4>
+                <div id="sports_chart"></div>
+            </div>
+            <div class="col-md-2">
+                <h4>Media Officer Results</h4>
+                <div id="media_chart"></div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-2">
+                <h4>Public Relations Officer Results</h4>
+                <div id="pr_chart"></div>
+            </div>
+            <div class="col-md-2">
+                <h4>Cultural Affair Officer Results</h4>
+                <div id="cul_chart"></div>
+            </div>
+            <div class="col-md-2">
+                <h4>4th Year Representatives Results</h4>
+                <div id="yrep4_chart"></div>
+            </div>
+            <div class="col-md-2">
+                <h4>3rd Year Representatives Results</h4>
+                <div id="yrep3_chart"></div>
+            </div>
+            <div class="col-md-2">
+                <h4>2nd Year Representatives Results</h4>
+                <div id="yrep2_chart"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="static/build/js/d3c3.min.js"></script>
+    <script src="static/js/result.js"></script>
+
+%include views/shared/footer.html

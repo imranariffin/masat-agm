@@ -57,4 +57,4 @@ node_modules
 package.json
 Gruntfile.js
 script.py
-.csv
+*.csv
