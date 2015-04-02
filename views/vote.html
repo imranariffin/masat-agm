@@ -5,7 +5,7 @@
     <br>
     % if not complete:
     <div class="reg-content">
-        <div class="btitle h1 text-center">MASAT Popular Votes</div>
+        <div class="btitle h1 text-center">AGM Vote</div>
         % if not blank and not all_filled:
             <div class="wrong h3 text-center">Please fill in every form</div>
         % end
@@ -19,7 +19,7 @@
         <form class="theform" method="POST" role="form">
             <div class="form-inner">
                 <div class="form-box">
-                    <label for="InputName" class="label-area">Access Code (Enter any random keyword)</label>
+                    <label for="InputName" class="label-area">Access Code (Case-sensitive)</label>
                     <div class="input-group form-area">
                         <input type="text" class="form-control" name="code" value="{{c}}" id="InputName" placeholder="Enter Unique Code" required>
                     </div>
