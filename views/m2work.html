@@ -1,0 +1,31 @@
+%include views/shared/header.html
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Poll Result <small>Manifesto into Work 2015/2016</small></h2>
+                <p>The manifesto of the winning candidates. It's time to put this manifesto into work.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container text-center">
+        <div class="row">
+            % for pos in positions:
+                <div class="col-md-4">
+                    <h4>Positions: <small>{{pos[0]}}</small></h4>
+                    <img src="static/img/{{pos[1]}}.jpg" alt="{{pos[1]}}" class="img-responsive img-rounded">
+                        <h4>Manifesto</h4>
+                        <ul class="list-group">
+                        % for man in pos[2]:
+                            <li class="list-group-item">
+                                {{man}}
+                            </li>
+                        % end
+                        </ul>
+                </div>
+            % end
+        </div>
+    </div>
+
+%include views/shared/footer.html

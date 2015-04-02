@@ -12,8 +12,8 @@
       <li role="presentation"><a href="#treasurer" aria-controls="treasurer" role="tab" data-toggle="tab">Treasurer</a></li>
       <li role="presentation"><a href="#sports" aria-controls="sports" role="tab" data-toggle="tab">Sports Officer</a></li>
       <li role="presentation"><a href="#media" aria-controls="media" role="tab" data-toggle="tab">Media Officer</a></li>
-      <li role="presentation"><a href="#pr" aria-controls="pr" role="tab" data-toggle="tab">Public Relation Officer</a></li>
-      <li role="presentation"><a href="#cultural" aria-controls="cultural" role="tab" data-toggle="tab">Cultural Affair Officer</a></li>
+      <li role="presentation"><a href="#pr" aria-controls="pr" role="tab" data-toggle="tab">PR Officer</a></li>
+      <li role="presentation"><a href="#cultural" aria-controls="cultural" role="tab" data-toggle="tab">Cultural A. Officer</a></li>
       <li role="presentation"><a href="#yearrep4" aria-controls="yearrep4" role="tab" data-toggle="tab">4th Year Rep</a></li>
       <li role="presentation"><a href="#yearrep3" aria-controls="yearrep3" role="tab" data-toggle="tab">3rd Year Rep</a></li>
       <li role="presentation"><a href="#yearrep2" aria-controls="yearrep2" role="tab" data-toggle="tab">2nd Year Rep</a></li>
@@ -30,28 +30,22 @@
           <div class="col-md-6">
             <img src="static/img/{{candidate[0]}}.jpg" class="img-responsive img-rounded" />
             <div class="row">
-              <div class="col-md-6">
-                <h4>Why {{candidate[0]}}?</h4>
-                <ul class="list-group">
-                  <li class="list-group-item">{{candidate[1]}}</li>
-                </ul>
-              </div>
-              <div class="col-md-6">
+              <div class="col-md-12">
                 <h4>Manifesto</h4>
                 <ul class="list-group">
-                  % if candidate[2][0][1] >= 5:
+                  % if candidate[2][0][1] >= 10:
                   <li class="list-group-item list-group-item-success">
                   % else:
                   <li class="list-group-item">
                   % end
                     <span class="badge">{{candidate[2][0][1]}}</span> {{candidate[2][0][0]}} </li>
-                  % if candidate[2][1][1] >= 5:
+                  % if candidate[2][1][1] >= 10:
                   <li class="list-group-item list-group-item-success">
                   % else:
                   <li class="list-group-item">
                   % end
                     <span class="badge">{{candidate[2][1][1]}}</span> {{candidate[2][1][0]}} </li>
-                  % if candidate[2][2][1] >= 5:
+                  % if candidate[2][2][1] >= 10:
                   <li class="list-group-item list-group-item-success">
                   % else:
                   <li class="list-group-item">
@@ -74,28 +68,22 @@
           <div class="col-md-4">
             <img src="static/img/{{candidate[0]}}.jpg" class="img-responsive img-rounded" />
             <div class="row">
-              <div class="col-md-6">
-                <h4>Why {{candidate[0]}}?</h4>
-                <ul class="list-group">
-                  <li class="list-group-item">{{candidate[1]}}</li>
-                </ul>
-              </div>
-              <div class="col-md-6">
+              <div class="col-md-12">
                 <h4>Manifesto</h4>
                 <ul class="list-group">
-                  % if candidate[2][0][1] >= 5:
+                  % if candidate[2][0][1] >= 10:
                   <li class="list-group-item list-group-item-success">
                   % else:
                   <li class="list-group-item">
                   % end
                     <span class="badge">{{candidate[2][0][1]}}</span> {{candidate[2][0][0]}} </li>
-                  % if candidate[2][1][1] >= 5:
+                  % if candidate[2][1][1] >= 10:
                   <li class="list-group-item list-group-item-success">
                   % else:
                   <li class="list-group-item">
                   % end
                     <span class="badge">{{candidate[2][1][1]}}</span> {{candidate[2][1][0]}} </li>
-                  % if candidate[2][2][1] >= 5:
+                  % if candidate[2][2][1] >= 10:
                   <li class="list-group-item list-group-item-success">
                   % else:
                   <li class="list-group-item">
@@ -121,19 +109,19 @@
               <div class="col-md-12">
                 <h4>Manifesto</h4>
                 <ul class="list-group">
-                  % if candidate[2][0][1] >= 5:
+                  % if candidate[2][0][1] >= 10:
                   <li class="list-group-item list-group-item-success">
                   % else:
                   <li class="list-group-item">
                   % end
                     <span class="badge">{{candidate[2][0][1]}}</span> {{candidate[2][0][0]}} </li>
-                  % if candidate[2][1][1] >= 5:
+                  % if candidate[2][1][1] >= 10:
                   <li class="list-group-item list-group-item-success">
                   % else:
                   <li class="list-group-item">
                   % end
                     <span class="badge">{{candidate[2][1][1]}}</span> {{candidate[2][1][0]}} </li>
-                  % if candidate[2][2][1] >= 5:
+                  % if candidate[2][2][1] >= 10:
                   <li class="list-group-item list-group-item-success">
                   % else:
                   <li class="list-group-item">
@@ -158,19 +146,19 @@
               <div class="col-md-12">
                 <h4>Manifesto</h4>
                 <ul class="list-group">
-                  % if candidate[2][0][1] >= 5:
+                  % if candidate[2][0][1] >= 10:
                   <li class="list-group-item list-group-item-success">
                   % else:
                   <li class="list-group-item">
                   % end
                     <span class="badge">{{candidate[2][0][1]}}</span> {{candidate[2][0][0]}} </li>
-                  % if candidate[2][1][1] >= 5:
+                  % if candidate[2][1][1] >= 10:
                   <li class="list-group-item list-group-item-success">
                   % else:
                   <li class="list-group-item">
                   % end
                     <span class="badge">{{candidate[2][1][1]}}</span> {{candidate[2][1][0]}} </li>
-                  % if candidate[2][2][1] >= 5:
+                  % if candidate[2][2][1] >= 10:
                   <li class="list-group-item list-group-item-success">
                   % else:
                   <li class="list-group-item">
@@ -192,28 +180,22 @@
           <div class="col-md-6">
             <img src="static/img/{{candidate[0]}}.jpg" class="img-responsive img-rounded" />
             <div class="row">
-              <div class="col-md-6">
-                <h4>Why {{candidate[0]}}?</h4>
-                <ul class="list-group">
-                  <li class="list-group-item">{{candidate[1]}}</li>
-                </ul>
-              </div>
-              <div class="col-md-6">
+              <div class="col-md-12">
                 <h4>Manifesto</h4>
                 <ul class="list-group">
-                  % if candidate[2][0][1] >= 5:
+                  % if candidate[2][0][1] >= 10:
                   <li class="list-group-item list-group-item-success">
                   % else:
                   <li class="list-group-item">
                   % end
                     <span class="badge">{{candidate[2][0][1]}}</span> {{candidate[2][0][0]}} </li>
-                  % if candidate[2][1][1] >= 5:
+                  % if candidate[2][1][1] >= 10:
                   <li class="list-group-item list-group-item-success">
                   % else:
                   <li class="list-group-item">
                   % end
                     <span class="badge">{{candidate[2][1][1]}}</span> {{candidate[2][1][0]}} </li>
-                  % if candidate[2][2][1] >= 5:
+                  % if candidate[2][2][1] >= 10:
                   <li class="list-group-item list-group-item-success">
                   % else:
                   <li class="list-group-item">
@@ -235,28 +217,22 @@
           <div class="col-md-6">
             <img src="static/img/{{candidate[0]}}.jpg" class="img-responsive img-rounded" />
             <div class="row">
-              <div class="col-md-6">
-                <h4>Why {{candidate[0]}}?</h4>
-                <ul class="list-group">
-                  <li class="list-group-item">{{candidate[1]}}</li>
-                </ul>
-              </div>
-              <div class="col-md-6">
+              <div class="col-md-12">
                 <h4>Manifesto</h4>
                 <ul class="list-group">
-                  % if candidate[2][0][1] >= 5:
+                  % if candidate[2][0][1] >= 10:
                   <li class="list-group-item list-group-item-success">
                   % else:
                   <li class="list-group-item">
                   % end
                     <span class="badge">{{candidate[2][0][1]}}</span> {{candidate[2][0][0]}} </li>
-                  % if candidate[2][1][1] >= 5:
+                  % if candidate[2][1][1] >= 10:
                   <li class="list-group-item list-group-item-success">
                   % else:
                   <li class="list-group-item">
                   % end
                     <span class="badge">{{candidate[2][1][1]}}</span> {{candidate[2][1][0]}} </li>
-                  % if candidate[2][2][1] >= 5:
+                  % if candidate[2][2][1] >= 10:
                   <li class="list-group-item list-group-item-success">
                   % else:
                   <li class="list-group-item">
@@ -279,9 +255,26 @@
             <img src="static/img/{{candidate[0]}}.jpg" class="img-responsive img-rounded" />
             <div class="row">
               <div class="col-md-12">
-                <h4>Why {{candidate[0]}}?</h4>
+                <h4>Manifesto</h4>
                 <ul class="list-group">
-                  <li class="list-group-item">{{candidate[1]}}</li>
+                  % if candidate[2][0][1] >= 10:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][0][1]}}</span> {{candidate[2][0][0]}} </li>
+                  % if candidate[2][1][1] >= 10:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][1][1]}}</span> {{candidate[2][1][0]}} </li>
+                  % if candidate[2][2][1] >= 10:
+                  <li class="list-group-item list-group-item-success">
+                  % else:
+                  <li class="list-group-item">
+                  % end
+                    <span class="badge">{{candidate[2][2][1]}}</span> {{candidate[2][2][0]}} </li>
                 </ul>
               </div>
             </div>
@@ -298,28 +291,22 @@
           <div class="col-md-6">
             <img src="static/img/{{candidate[0]}}.jpg" class="img-responsive img-rounded" />
             <div class="row">
-              <div class="col-md-6">
-                <h4>Why {{candidate[0]}}?</h4>
-                <ul class="list-group">
-                  <li class="list-group-item">{{candidate[1]}}</li>
-                </ul>
-              </div>
-              <div class="col-md-6">
+              <div class="col-md-12">
                 <h4>Manifesto</h4>
                 <ul class="list-group">
-                  % if candidate[2][0][1] >= 5:
+                  % if candidate[2][0][1] >= 10:
                   <li class="list-group-item list-group-item-success">
                   % else:
                   <li class="list-group-item">
                   % end
                     <span class="badge">{{candidate[2][0][1]}}</span> {{candidate[2][0][0]}} </li>
-                  % if candidate[2][1][1] >= 5:
+                  % if candidate[2][1][1] >= 10:
                   <li class="list-group-item list-group-item-success">
                   % else:
                   <li class="list-group-item">
                   % end
                     <span class="badge">{{candidate[2][1][1]}}</span> {{candidate[2][1][0]}} </li>
-                  % if candidate[2][2][1] >= 5:
+                  % if candidate[2][2][1] >= 10:
                   <li class="list-group-item list-group-item-success">
                   % else:
                   <li class="list-group-item">
@@ -342,28 +329,22 @@
           <div class="col-md-6">
             <img src="static/img/{{candidate[0]}}.jpg" class="img-responsive img-rounded" />
             <div class="row">
-              <div class="col-md-6">
-                <h4>Why {{candidate[0]}}?</h4>
-                <ul class="list-group">
-                  <li class="list-group-item">{{candidate[1]}}</li>
-                </ul>
-              </div>
-              <div class="col-md-6">
+              <div class="col-md-12">
                 <h4>Manifesto</h4>
                 <ul class="list-group">
-                  % if candidate[2][0][1] >= 5:
+                  % if candidate[2][0][1] >= 10:
                   <li class="list-group-item list-group-item-success">
                   % else:
                   <li class="list-group-item">
                   % end
                     <span class="badge">{{candidate[2][0][1]}}</span> {{candidate[2][0][0]}} </li>
-                  % if candidate[2][1][1] >= 5:
+                  % if candidate[2][1][1] >= 10:
                   <li class="list-group-item list-group-item-success">
                   % else:
                   <li class="list-group-item">
                   % end
                     <span class="badge">{{candidate[2][1][1]}}</span> {{candidate[2][1][0]}} </li>
-                  % if candidate[2][2][1] >= 5:
+                  % if candidate[2][2][1] >= 10:
                   <li class="list-group-item list-group-item-success">
                   % else:
                   <li class="list-group-item">
@@ -386,28 +367,22 @@
           <div class="col-md-4">
             <img src="static/img/{{candidate[0]}}.jpg" class="img-responsive img-rounded" />
             <div class="row">
-              <div class="col-md-6">
-                <h4>Why {{candidate[0]}}?</h4>
-                <ul class="list-group">
-                  <li class="list-group-item">{{candidate[1]}}</li>
-                </ul>
-              </div>
-              <div class="col-md-6">
+              <div class="col-md-12">
                 <h4>Manifesto</h4>
                 <ul class="list-group">
-                  % if candidate[2][0][1] >= 5:
+                  % if candidate[2][0][1] >= 10:
                   <li class="list-group-item list-group-item-success">
                   % else:
                   <li class="list-group-item">
                   % end
                     <span class="badge">{{candidate[2][0][1]}}</span> {{candidate[2][0][0]}} </li>
-                  % if candidate[2][1][1] >= 5:
+                  % if candidate[2][1][1] >= 10:
                   <li class="list-group-item list-group-item-success">
                   % else:
                   <li class="list-group-item">
                   % end
                     <span class="badge">{{candidate[2][1][1]}}</span> {{candidate[2][1][0]}} </li>
-                  % if candidate[2][2][1] >= 5:
+                  % if candidate[2][2][1] >= 10:
                   <li class="list-group-item list-group-item-success">
                   % else:
                   <li class="list-group-item">
@@ -430,28 +405,22 @@
           <div class="col-md-4">
             <img src="static/img/{{candidate[0]}}.jpg" class="img-responsive img-rounded" />
             <div class="row">
-              <div class="col-md-6">
-                <h4>Why {{candidate[0]}}?</h4>
-                <ul class="list-group">
-                  <li class="list-group-item">{{candidate[1]}}</li>
-                </ul>
-              </div>
-              <div class="col-md-6">
+              <div class="col-md-12">
                 <h4>Manifesto</h4>
                 <ul class="list-group">
-                  % if candidate[2][0][1] >= 5:
+                  % if candidate[2][0][1] >= 10:
                   <li class="list-group-item list-group-item-success">
                   % else:
                   <li class="list-group-item">
                   % end
                     <span class="badge">{{candidate[2][0][1]}}</span> {{candidate[2][0][0]}} </li>
-                  % if candidate[2][1][1] >= 5:
+                  % if candidate[2][1][1] >= 10:
                   <li class="list-group-item list-group-item-success">
                   % else:
                   <li class="list-group-item">
                   % end
                     <span class="badge">{{candidate[2][1][1]}}</span> {{candidate[2][1][0]}} </li>
-                  % if candidate[2][2][1] >= 5:
+                  % if candidate[2][2][1] >= 10:
                   <li class="list-group-item list-group-item-success">
                   % else:
                   <li class="list-group-item">

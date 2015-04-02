@@ -5,6 +5,7 @@ import os
 import random
 from bson.json_util import dumps
 from helper import *
+from acode import *
 
 from uuid import uuid4
 
@@ -55,11 +56,57 @@ def get_one_man(vote_id):
 				target = doc
 	return dumps(target, sort_keys=True, indent=4, default=json_util.default)
 
+@route("/m2work")
+def m2work():
+	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
+	db = client.get_default_database()
+	man = db['man']
+	cursor = man.find({'win':1})
+	
+	pos_pos = {'President':1,
+			   'VP':2,
+			   'Secretary':3,
+			   'Treasurer':4,
+			   'Media':5,
+			   'Sports':6,
+			   'PR':7,
+			   'Cultural':8,
+			   'YearRep4':9,
+			   'YearRep3':10,
+			   'YearRep2':11}
+
+	ls_pres = []
+	ls_vp = []
+	ls_sec = []
+	ls_treas = []
+	ls_sport = []
+	ls_media = []
+	ls_pr = []
+	ls_cul = []
+	ls_yrep4 = []
+	ls_yrep3 = []
+	ls_yrep2 = []
+
+	positions = []
+	for doc in cursor:
+		pos = doc['position']
+		pos_rank = pos_pos[pos]
+		name = doc['name']
+		manifestos = doc['manifesto']
+		mans = []
+		for e in manifestos:
+			mans.append(e[0])
+		positions.append([pos, name, mans, pos_rank])
+
+	positions.sort(key=lambda tup: tup[3], reverse=False)
+
+	return template('views/m2work.html',
+					positions=positions,
+					page="manifesto")
+
 @route("/mbuilder")
 def man_builder():
-
-	return template('views/mbuilder.html',
-					page="mbuilder")
+	return template('views/mbuilder.html', page="mbuilder")
 
 @route('/ask.json')
 def ask_json():
@@ -69,10 +116,6 @@ def ask_json():
 	doc = ask.find()
 	client.close()
 	return dumps(doc, sort_keys=True, indent=4, default=json_util.default)
-
-@route('/test')
-def test():
-	return template('views/test.html')
 
 import httpagentparser
 
@@ -218,8 +261,8 @@ def main():
 								  ls_yrep2=ls_yrep2,
 								  page="candidates")
 
-@route("/myvote", method="GET")
-@route("/myvote", method="POST")
+@route("/mvote", method="GET")
+@route("/mvote", method="POST")
 def vote():
 	get_code = request.forms.code
 	get_president = request.forms.president
@@ -307,17 +350,19 @@ def vote():
 			fifth = get_code[4]
 			sixth = get_code[5]
 
-			if first not in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890':
+			if first not in 'ABCDEFGHIJKLMN123456789':
 				access = False
-			if second not in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ':
+			if second not in 'ABCDEFGHIJKLMN':
 				access = False
-			if third not in '1234567890':
+			if third not in '123456789':
 				access = False
 			if forth not in '13579':
 				access = False
 			if fifth not in '2015':
 				access = False
 			if sixth not in 'zahir':
+				access = False
+			if not check_acode(get_code):
 				access = False
 		else:
 			access = False
@@ -372,11 +417,11 @@ def vote():
 									 all_filled=all_filled,
 									 blank=blank)
 
-@route("/resultz")
+@route("/resultRT")
 def resultz():
-	return template('views/resultz.html', page="result")
+	return template('views/resultRT.html', page="result")
 
-@route("/resulty")
+@route("/resultAPI")
 def resulty():
 	print_list = []
 	president_count = {}
@@ -605,15 +650,6 @@ def resultx():
 		except:
 			print "problem"
 
-		# try:
-		# 	s = doc['secretary']
-		# 	if s not in secretary_count:
-		# 		secretary_count[s] = 1
-		# 	else:
-		# 		secretary_count[s] += 1
-		# except:
-		# 	pass
-
 	pc = []
 	vpc = []
 	sc = []
@@ -683,6 +719,7 @@ def manifesto():
 	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
 	db = client.get_default_database()
 	man = db['man']
+	upvotes = db['upvotes']
 	ls = []
 
 	get_id = str(request.forms.man_id)
@@ -693,15 +730,43 @@ def manifesto():
 
 	existing_voter = False
 
-	if get_sid:
-		upvotes = db['upvotes']
-		up_cursor = upvotes.find({'username':fb_id})
+	get_code = request.forms.code
+	access = True
+
+	if get_code:
+		if len(get_code) == 6:
+			first = get_code[0]
+			second = get_code[1]
+			third = get_code[2]
+			forth = get_code[3]
+			fifth = get_code[4]
+			sixth = get_code[5]
+
+			if first not in 'ABCDEFGHIJKLMN123456789':
+				access = False
+			if second not in 'ABCDEFGHIJKLMN':
+				access = False
+			if third not in '123456789':
+				access = False
+			if forth not in '13579':
+				access = False
+			if fifth not in '2015':
+				access = False
+			if sixth not in 'zahir':
+				access = False
+			if not check_acode(get_code):
+				access = False
+		else:
+			access = False
+
+	if get_sid and access:
+		up_cursor = upvotes.find({'username':get_code})
 		for doc in up_cursor:
 			if doc['vote_id'] == get_id[:25]:
 				existing_voter = True
 
-		if not existing_voter and fb_id:
-			upvotes.insert({"username":fb_id,
+		if not existing_voter and get_code:
+			upvotes.insert({"username":get_code,
 							"vote_id":get_id[:25],
 							"cookie":eat_cookies(),
 							"browser":browser_info()})
@@ -712,11 +777,15 @@ def manifesto():
 				doc['manifesto'][get_index][1] += 1
 			man.update({'_id':doc['_id']}, {"$set":doc})
 
-		if not fb_id:
-			logging_err = True
-
 	cursor = man.find()
 
+	# Code to detect manifesto already voted by the same user
+	d_ls = []
+	det_cursor = upvotes.find({'username':get_code})
+	for detect in det_cursor:
+		d_ls.append(detect['vote_id'])
+
+	# Code to populate list
 	rank_ls = []
 	man_score = 0
 	for doc in cursor:
@@ -725,13 +794,15 @@ def manifesto():
 			if i[0] not in ['1','2','3']:
 				i.append(doc['position'])
 				i.append(doc['name'])
+				if i[2] in d_ls:
+					i.append(1)
+				else:
+					i.append(0)
 				ls.append(i)
 			man_score += i[1]
+
 		rank_ls.append([doc['name'], doc['position'], man_score])
 		man_score = 0
-
-	# for rank in rank_ls:
-	# 	print rank
 
 	pos_ls = man.distinct("position")
 
@@ -773,13 +844,13 @@ def manifesto():
 	ls.sort(key=lambda tup: tup[1], reverse=True)
 	r.sort(key=lambda tup:tup[3], reverse=False)
 
-	# Code to add manifesto infographics
-
 	client.close()
 	return template('views/manifesto.html', page="manifesto",
 											ls=ls,
 											logging_err=logging_err,
-											r=r)
+											r=r,
+											c=get_code,
+											access=access)
 
 from collections import Counter
 @route("/ask", method="GET")

@@ -7,7 +7,7 @@ $(function () {
 function callAjax() {
     $.ajax({
         type: 'GET',
-        url: '/resulty',
+        url: '/resultAPI',
         success: function(data) {
                 $.each(data, function(i, pos) {
                     var col_arr = new Array();
@@ -33,7 +33,7 @@ function callAjax() {
                 });
         },
         complete: function() {
-            setTimeout(callAjax, 1000);
+            setTimeout(callAjax, 1100);
         },
         dataType: 'json',
     });

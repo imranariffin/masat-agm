@@ -1,29 +1,35 @@
 %include views/shared/header.html
     
-<br><br>
-
-<script src="static/js/fb.min.js"></script>
+<br>
 
 <div class="container">
     
     <div class="row">
       <div class="col-md-8">
         <h2>Manifesto</h2>
-        <p>You need to log in with Facebook to upvote manifesto</p>
+        <p>You need to enter access code to upvote manifesto</p>
         % if logging_err:
           <p style="color: red">Please log in!</p>
         % end
       </div>
-      <div class="col-md-3">
-      <br><br>
-        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-        </fb:login-button>
-
-        <div id="status">
-        </div>
-      </div>
     </div>
     <br>
+
+    % if 1:
+      % if not access:
+          <div class="wrong h3 text-center">Wrong access code. Hacker will be reported.</div>
+      % end
+      <form class="theform" method="POST" role="form">
+          <div class="form-inner">
+              <div class="form-box">
+                  <label for="InputName" class="label-area">Access Code (Case-sensitive)</label>
+                  <div class="input-group form-area">
+                      <input type="text" class="form-control" name="code" value="{{c}}" id="InputName" placeholder="Enter Unique Code" required>
+                  </div>
+              </div>
+          </div>
+      <!-- </form> -->
+    % end
 
     <div class="row">
       <div class="col-md-11">
@@ -60,11 +66,15 @@
 
     <div class="row">
         <div class="col-md-11">
-            <form action="" method="post">
+            <!-- <form action="" method="post"> -->
             <table class="table table-hover table-responsive">
             % for man in ls:
               <tr>
-                <td><button class="btn btn-primary btn-xs" name="man_id" value="{{man[2]}}">upvote <span class="badge">{{man[1]}}</span></button></td><td>{{man[0]}}</td><td>{{man[3]}}</td>
+                % if man[5]:
+                  <td><button class="btn btn-warning btn-xs" name="man_id" value="{{man[2]}}">upvoted <span class="badge">{{man[1]}}</span></button></td><td>{{man[0]}}</td><td>{{man[3]}}</td>
+                % else:
+                  <td><button class="btn btn-primary btn-xs" name="man_id" value="{{man[2]}}">upvote <span class="badge">{{man[1]}}</span></button></td><td>{{man[0]}}</td><td>{{man[3]}}</td>
+                % end
               </tr>
             % end
             </table>
