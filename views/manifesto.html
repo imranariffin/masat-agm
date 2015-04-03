@@ -16,25 +16,27 @@
 
     % if 1:
       % if not access:
-          <div class="wrong h3 text-center">Wrong access code. Hacker will be reported.</div>
+          <div class="wrong h3 text-left">Wrong access code. Hacker will be reported.</div>
       % end
+      <br>
       <form class="theform" method="POST" role="form">
-          <div class="form-inner">
-              <div class="form-box">
-                  <label for="InputName" class="label-area">Access Code (Case-sensitive)</label>
-                  <div class="input-group form-area">
-                      <input type="text" class="form-control" name="code" value="{{c}}" id="InputName" placeholder="Enter Unique Code" required>
-                  </div>
-              </div>
-          </div>
+      <div class="row">
+        <div class="col-md-3">
+          <label for="InputName" class="label-area">Access Code (Case-sensitive)</label>
+          <input type="text" class="form-control" name="code" value="{{c}}" id="InputName" placeholder="Enter Unique Code" required>
+        </div>
+      </div>
+        
+        
       <!-- </form> -->
     % end
-
+    
+    <br>
     <div class="row">
       <div class="col-md-11">
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-          NEW: Who's leading based on manifesto?
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">
+          Who's leading based on manifesto?
         </button>
 
         <!-- Modal -->
