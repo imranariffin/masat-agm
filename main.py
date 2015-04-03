@@ -3,30 +3,100 @@ from bottle import route, run, template, request, static_file, get, post, respon
 import bottle
 import os
 import random
-from bson.json_util import dumps
 from helper import *
-from acode import *
-
+from acode import *					# Get access code from this file
+import pymongo						# MongoDB
+from pymongo import MongoClient		# MongoDB client
 from uuid import uuid4
+from bson.json_util import dumps
+from bson import json_util
+import httpagentparser				# to track browser (anti-spamming mechanism)
+from bson.objectid import objectid  # cast string into objectid
+from collections import Counter		# count number of occurances in a list
+
+MONGOLAB_URI = os.environ['MONGOLAB_URI2']
 
 def eat_cookies():
 	cookie_id = bottle.request.get_cookie('mycookiename', str(uuid4()))
 	bottle.response.set_cookie('mycookiename', cookie_id, max_age=950400)
 	return cookie_id
 
-#specifying the path for the files
+# specifying the path for the files
 @route('/static/<filepath:path>')
 def server_static(filepath):
 	return static_file(filepath, root='.')
 
-import pymongo
-from pymongo import MongoClient
+	# main function, the candidates
+	@route("/", method="GET")
+	def main():
+		client = MongoClient(MONGOLAB_URI)
+		db = client.get_default_database()
+		man = db['man']
 
-from bson.json_util import dumps
-from bson import json_util
+		cursor = man.find();
 
-MONGOLAB_URI = os.environ['MONGOLAB_URI2']
+		ls_pres = []
+		ls_vp = []
+		ls_sec = []
+		ls_treas = []
+		ls_sport = []
+		ls_media = []
+		ls_pr = []
+		ls_cul = []
+		ls_yrep4 = []
+		ls_yrep3 = []
+		ls_yrep2 = []
 
+		for doc in cursor:
+			if doc['position'] == "President":
+				ls_pres.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
+			elif doc['position'] == "VP":
+				ls_vp.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
+			elif doc['position'] == "Secretary":
+				ls_sec.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
+			elif doc['position'] == "Treasurer":
+				ls_treas.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
+			elif doc['position'] == "Sports":
+				ls_sport.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
+			elif doc['position'] == "Media":
+				ls_media.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
+			elif doc['position'] == "PR":
+				ls_pr.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
+			elif doc['position'] == "Cultural":
+				ls_cul.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
+			elif doc['position'] == "YearRep4":
+				ls_yrep4.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
+			elif doc['position'] == "YearRep3":
+				ls_yrep3.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
+			elif doc['position'] == "YearRep2":
+				ls_yrep2.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
+
+		random.shuffle(ls_pres)
+		random.shuffle(ls_vp)
+		random.shuffle(ls_sec)
+		random.shuffle(ls_treas)
+		random.shuffle(ls_sport)
+		random.shuffle(ls_media)
+		random.shuffle(ls_pr)
+		random.shuffle(ls_cul)
+		random.shuffle(ls_yrep4)
+		random.shuffle(ls_yrep3)
+		random.shuffle(ls_yrep2)
+
+		return template('views/index.html', ls_pres=ls_pres,
+									  ls_vp=ls_vp,
+									  ls_sec=ls_sec,
+									  ls_treas=ls_treas,
+									  ls_sport=ls_sport,
+									  ls_media=ls_media,
+									  ls_pr=ls_pr,
+									  ls_cul=ls_cul,
+									  ls_yrep4=ls_yrep4,
+									  ls_yrep3=ls_yrep3,
+									  ls_yrep2=ls_yrep2,
+									  page="candidates")
+
+# getting manifesto json file
 @route("/man")
 def get_all_man():
 	client = MongoClient(MONGOLAB_URI)
@@ -35,6 +105,7 @@ def get_all_man():
 	doc = man.find()
 	return dumps(doc, sort_keys=True, indent=4, default=json_util.default)
 
+# getting only one manifesto
 @route("/man/<vote_id>")
 def get_one_man(vote_id):
 	client = MongoClient(MONGOLAB_URI)
@@ -48,6 +119,7 @@ def get_one_man(vote_id):
 				target = doc
 	return dumps(target, sort_keys=True, indent=4, default=json_util.default)
 
+# function to be shown after candidates win election
 @route("/m2work")
 def m2work():
 	client = MongoClient(MONGOLAB_URI)
@@ -96,25 +168,17 @@ def m2work():
 					positions=positions,
 					page="manifesto")
 
+# manifesto builder feature
 @route("/mbuilder")
 def man_builder():
 	return template('views/mbuilder.html', page="mbuilder")
 
-@route('/ask.json')
-def ask_json():
-	client = MongoClient(MONGOLAB_URI)
-	db = client.get_default_database()
-	ask = db['ask']
-	doc = ask.find()
-	client.close()
-	return dumps(doc, sort_keys=True, indent=4, default=json_util.default)
-
-import httpagentparser
-
+# get browser info to prevent spamming
 def browser_info():
 	s = request.environ.get('HTTP_USER_AGENT')
 	return httpagentparser.simple_detect(s)
 
+# show comparison between candidates during candidate speech (should be bigger)
 @route("/compare", method="GET")
 def main():
 	client = MongoClient(MONGOLAB_URI)
@@ -183,75 +247,6 @@ def main():
 								  ls_yrep3=ls_yrep3,
 								  ls_yrep2=ls_yrep2,
 								  page="april2")
-
-@route("/", method="GET")
-def main():
-	client = MongoClient(MONGOLAB_URI)
-	db = client.get_default_database()
-	man = db['man']
-
-	cursor = man.find();
-
-	ls_pres = []
-	ls_vp = []
-	ls_sec = []
-	ls_treas = []
-	ls_sport = []
-	ls_media = []
-	ls_pr = []
-	ls_cul = []
-	ls_yrep4 = []
-	ls_yrep3 = []
-	ls_yrep2 = []
-
-	for doc in cursor:
-		if doc['position'] == "President":
-			ls_pres.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
-		elif doc['position'] == "VP":
-			ls_vp.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
-		elif doc['position'] == "Secretary":
-			ls_sec.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
-		elif doc['position'] == "Treasurer":
-			ls_treas.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
-		elif doc['position'] == "Sports":
-			ls_sport.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
-		elif doc['position'] == "Media":
-			ls_media.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
-		elif doc['position'] == "PR":
-			ls_pr.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
-		elif doc['position'] == "Cultural":
-			ls_cul.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
-		elif doc['position'] == "YearRep4":
-			ls_yrep4.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
-		elif doc['position'] == "YearRep3":
-			ls_yrep3.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
-		elif doc['position'] == "YearRep2":
-			ls_yrep2.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
-
-	random.shuffle(ls_pres)
-	random.shuffle(ls_vp)
-	random.shuffle(ls_sec)
-	random.shuffle(ls_treas)
-	random.shuffle(ls_sport)
-	random.shuffle(ls_media)
-	random.shuffle(ls_pr)
-	random.shuffle(ls_cul)
-	random.shuffle(ls_yrep4)
-	random.shuffle(ls_yrep3)
-	random.shuffle(ls_yrep2)
-
-	return template('views/index.html', ls_pres=ls_pres,
-								  ls_vp=ls_vp,
-								  ls_sec=ls_sec,
-								  ls_treas=ls_treas,
-								  ls_sport=ls_sport,
-								  ls_media=ls_media,
-								  ls_pr=ls_pr,
-								  ls_cul=ls_cul,
-								  ls_yrep4=ls_yrep4,
-								  ls_yrep3=ls_yrep3,
-								  ls_yrep2=ls_yrep2,
-								  page="candidates")
 
 @route("/vote", method="GET")
 @route("/vote", method="POST")
@@ -409,10 +404,12 @@ def vote():
 									 all_filled=all_filled,
 									 blank=blank)
 
+# get result in real-time
 @route("/resultRT")
 def resultz():
 	return template('views/resultRT.html', page="result")
 
+# get result in json format
 @route("/resultAPI")
 def resulty():
 	print_list = []
@@ -548,21 +545,10 @@ def resulty():
 			   {'position':'yrep3','ls':yrep3},
 			   {'position':'yrep2','ls':yrep2}]
 
-	# pc.sort(key=lambda tup: tup[1], reverse=True)
-	# vpc.sort(key=lambda tup: tup[1], reverse=True)
-	# sc.sort(key=lambda tup: tup[1], reverse=True)
-	# treas.sort(key=lambda tup: tup[1], reverse=True)
-	# sports.sort(key=lambda tup: tup[1], reverse=True)
-	# media.sort(key=lambda tup: tup[1], reverse=True)
-	# cul.sort(key=lambda tup: tup[1], reverse=True)
-	# pr.sort(key=lambda tup: tup[1], reverse=True)
-	# yrep4.sort(key=lambda tup: tup[1], reverse=True)
-	# yrep3.sort(key=lambda tup: tup[1], reverse=True)
-	# yrep2.sort(key=lambda tup: tup[1], reverse=True)
-
 	client.close()
 	return dumps(full_ls, sort_keys=True, indent=4, default=json_util.default)
 
+# display the result using D3 and C3 library
 @route("/result")
 def resultx():
 	print_list = []
@@ -691,8 +677,7 @@ def resultx():
 								   yrep2=yrep2,
 								   page="result")
 
-from bson.objectid import ObjectId
-
+# Display candidates manifesto with upvoting system
 @route("/manifesto", method="GET")
 @route("/manifesto", method="POST")
 def manifesto():
@@ -832,7 +817,7 @@ def manifesto():
 											c=get_code,
 											access=access)
 
-from collections import Counter
+# HashTagAskCandidate page
 @route("/ask", method="GET")
 @route("/ask", method="POST")
 def ask():
@@ -864,8 +849,6 @@ def ask():
 		if cmp_fb_id == fb_id:
 			access = ObjectId(get_qid)
 
-	# has_cookie = cookies.find({'candidate':cookie}).count()
-
 	if not blank:
 		get_fb_asker = request.forms.fb_asker
 
@@ -877,7 +860,6 @@ def ask():
 					 "question":str(get_question),
 					 "cookie":eat_cookies(),
 					 "fb":insert_fb,
-					 "fb_asker":get_fb_asker,
 					 "date":est_time(),
 					 "score":0,
 					 "likes":[],
@@ -993,6 +975,7 @@ def ask():
 									  u=get_u,
 									  q_asked=q_asked)
 
+# admin panel
 @route("/admin", method="GET")
 @route("/admin", method="POST")
 def admin():
