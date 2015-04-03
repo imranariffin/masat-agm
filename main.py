@@ -25,16 +25,6 @@ from pymongo import MongoClient
 from bson.json_util import dumps
 from bson import json_util
 
-@route("/vote")
-def vote():
-	return template('views/closed.html',
-					page="vote")
-
-@route("/result")
-def result():
-	return template('views/closed.html',
-					page="result")
-
 @route("/man")
 def get_all_man():
 	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
@@ -261,8 +251,8 @@ def main():
 								  ls_yrep2=ls_yrep2,
 								  page="candidates")
 
-@route("/mvote", method="GET")
-@route("/mvote", method="POST")
+@route("/vote", method="GET")
+@route("/vote", method="POST")
 def vote():
 	get_code = request.forms.code
 	get_president = request.forms.president
@@ -571,7 +561,7 @@ def resulty():
 	client.close()
 	return dumps(full_ls, sort_keys=True, indent=4, default=json_util.default)
 
-@route("/resultx")
+@route("/result")
 def resultx():
 	print_list = []
 	president_count = {}
