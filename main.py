@@ -113,7 +113,7 @@ def browser_info():
 	s = request.environ.get('HTTP_USER_AGENT')
 	return httpagentparser.simple_detect(s)
 
-@route("/slide", method="GET")
+@route("/compare", method="GET")
 def main():
 	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
 	db = client.get_default_database()
