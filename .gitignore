@@ -58,3 +58,4 @@ package.json
 Gruntfile.js
 script.py
 *.csv
+.env

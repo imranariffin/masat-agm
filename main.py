@@ -25,9 +25,11 @@ from pymongo import MongoClient
 from bson.json_util import dumps
 from bson import json_util
 
+MONGOLAB_URI = os.environ['MONGOLAB_URI2']
+
 @route("/man")
 def get_all_man():
-	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
+	client = MongoClient(MONGOLAB_URI)
 	db = client.get_default_database()
 	man = db['man']
 	doc = man.find()
@@ -35,7 +37,7 @@ def get_all_man():
 
 @route("/man/<vote_id>")
 def get_one_man(vote_id):
-	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
+	client = MongoClient(MONGOLAB_URI)
 	db = client.get_default_database()
 	man = db['man']
 	cursor = man.find()
@@ -48,7 +50,7 @@ def get_one_man(vote_id):
 
 @route("/m2work")
 def m2work():
-	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
+	client = MongoClient(MONGOLAB_URI)
 	db = client.get_default_database()
 	man = db['man']
 	cursor = man.find({'win':1})
@@ -100,7 +102,7 @@ def man_builder():
 
 @route('/ask.json')
 def ask_json():
-	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
+	client = MongoClient(MONGOLAB_URI)
 	db = client.get_default_database()
 	ask = db['ask']
 	doc = ask.find()
@@ -115,7 +117,7 @@ def browser_info():
 
 @route("/compare", method="GET")
 def main():
-	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
+	client = MongoClient(MONGOLAB_URI)
 	db = client.get_default_database()
 	man = db['man']
 
@@ -184,7 +186,7 @@ def main():
 
 @route("/", method="GET")
 def main():
-	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
+	client = MongoClient(MONGOLAB_URI)
 	db = client.get_default_database()
 	man = db['man']
 
@@ -266,7 +268,7 @@ def vote():
 	get_yrep4 = request.forms.yrep4
 	get_yrep3 = request.forms.yrep3
 	get_yrep2 = request.forms.yrep2
-	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
+	client = MongoClient(MONGOLAB_URI)
 	db = client.get_default_database()
 
 	man = db['man']
@@ -425,7 +427,7 @@ def resulty():
 	yrep4_count = {}
 	yrep3_count = {}
 	yrep2_count = {}
-	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
+	client = MongoClient(MONGOLAB_URI)
 	db = client.get_default_database()
 	votes = db['votes']
 
@@ -575,7 +577,7 @@ def resultx():
 	yrep4_count = {}
 	yrep3_count = {}
 	yrep2_count = {}
-	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
+	client = MongoClient(MONGOLAB_URI)
 	db = client.get_default_database()
 	votes = db['votes']
 
@@ -675,18 +677,6 @@ def resultx():
 	for key in yrep2_count:
 		yrep2.append([key, yrep2_count[key]])
 
-	# pc.sort(key=lambda tup: tup[1], reverse=True)
-	# vpc.sort(key=lambda tup: tup[1], reverse=True)
-	# sc.sort(key=lambda tup: tup[1], reverse=True)
-	# treas.sort(key=lambda tup: tup[1], reverse=True)
-	# sports.sort(key=lambda tup: tup[1], reverse=True)
-	# media.sort(key=lambda tup: tup[1], reverse=True)
-	# cul.sort(key=lambda tup: tup[1], reverse=True)
-	# pr.sort(key=lambda tup: tup[1], reverse=True)
-	# yrep4.sort(key=lambda tup: tup[1], reverse=True)
-	# yrep3.sort(key=lambda tup: tup[1], reverse=True)
-	# yrep2.sort(key=lambda tup: tup[1], reverse=True)
-
 	client.close()
 	return template('views/result.html', pc=pc,
 								   vpc=vpc,
@@ -706,7 +696,7 @@ from bson.objectid import ObjectId
 @route("/manifesto", method="GET")
 @route("/manifesto", method="POST")
 def manifesto():
-	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
+	client = MongoClient(MONGOLAB_URI)
 	db = client.get_default_database()
 	man = db['man']
 	upvotes = db['upvotes']
@@ -846,7 +836,7 @@ from collections import Counter
 @route("/ask", method="GET")
 @route("/ask", method="POST")
 def ask():
-	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
+	client = MongoClient(MONGOLAB_URI)
 	db = client.get_default_database()
 	man = db['man']
 	ask = db['ask']
@@ -1006,7 +996,7 @@ def ask():
 @route("/admin", method="GET")
 @route("/admin", method="POST")
 def admin():
-	client = MongoClient('mongodb://admin:admin@ds031581.mongolab.com:31581/heroku_app34859325')
+	client = MongoClient(MONGOLAB_URI)
 	db = client.get_default_database()
 	man = db['man']
 	ask = db['ask']
