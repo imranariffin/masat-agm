@@ -13,7 +13,7 @@ from bson import json_util
 import httpagentparser				# to track browser (anti-spamming mechanism)
 from bson.objectid import ObjectId  # cast string into objectid
 from collections import Counter		# count number of occurances in a list
-
+import mongapi
 try:
 	from auth import MONGOLAB_URI
 except ImportError:
@@ -32,11 +32,14 @@ def server_static(filepath):
 # main function, the candidates
 @route("/", method="GET")
 def main():
-	client = MongoClient(MONGOLAB_URI)
-	db = client.get_default_database()
-	man = db['man']
+	# client = MongoClient(MONGOLAB_URI)
+	# db = client.get_default_database()
+	# man = db['nominations']
 
-	cursor = man.find();
+	# cursor = man.find();
+	
+	nominations = mongapi.get_all_nominations()
+	cand_map = {cand["cand_id"] : cand for cand in mongapi.get_all_candidates()}
 
 	ls_pres = []
 	ls_vp = []
@@ -46,33 +49,56 @@ def main():
 	ls_media = []
 	ls_pr = []
 	ls_cul = []
-	ls_yrep4 = []
-	ls_yrep3 = []
-	ls_yrep2 = []
 
-	for doc in cursor:
+	for doc in nominations:
 		if doc['position'] == "President":
-			ls_pres.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
-		elif doc['position'] == "VP":
-			ls_vp.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
+			ls_pres.append([
+				cand_map[doc['cand_id']]['name'],
+				doc['desc'],
+				doc['manifesto'],
+				doc['_id']])
+		elif doc['position'] == "Vice-President":
+			ls_vp.append([
+				cand_map[doc['cand_id']]['name'],
+				doc['desc'],
+				doc['manifesto'],
+				doc['_id']])
 		elif doc['position'] == "Secretary":
-			ls_sec.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
+			ls_sec.append([
+				cand_map[doc['cand_id']]['name'],
+				doc['desc'],
+				doc['manifesto'],
+				doc['_id']])
 		elif doc['position'] == "Treasurer":
-			ls_treas.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
-		elif doc['position'] == "Sports":
-			ls_sport.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
-		elif doc['position'] == "Media":
-			ls_media.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
-		elif doc['position'] == "PR":
-			ls_pr.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
-		elif doc['position'] == "Cultural":
-			ls_cul.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
-		elif doc['position'] == "YearRep4":
-			ls_yrep4.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
-		elif doc['position'] == "YearRep3":
-			ls_yrep3.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
-		elif doc['position'] == "YearRep2":
-			ls_yrep2.append([doc['name'],doc['comment'],doc['manifesto'],doc['_id']])
+			ls_treas.append([
+				cand_map[doc['cand_id']]['name'],
+				doc['desc'],
+				doc['manifesto'],
+				doc['_id']])
+		elif doc['position'] == "Sports Officer":
+			ls_sport.append([
+				cand_map[doc['cand_id']]['name'],
+				doc['desc'],
+				doc['manifesto'],
+				doc['_id']])
+		elif doc['position'] == "Media Officer":
+			ls_media.append([
+				cand_map[doc['cand_id']]['name'],
+				doc['desc'],
+				doc['manifesto'],
+				doc['_id']])
+		elif doc['position'] == "Student Welfare Officer":
+			ls_pr.append([
+				cand_map[doc['cand_id']]['name'],
+				doc['desc'],
+				doc['manifesto'],
+				doc['_id']])
+		elif doc['position'] == "Cultural Affairs Officer":
+			ls_cul.append([
+				cand_map[doc['cand_id']]['name'],
+				doc['desc'],
+				doc['manifesto'],
+				doc['_id']])
 
 	random.shuffle(ls_pres)
 	random.shuffle(ls_vp)
@@ -82,9 +108,6 @@ def main():
 	random.shuffle(ls_media)
 	random.shuffle(ls_pr)
 	random.shuffle(ls_cul)
-	random.shuffle(ls_yrep4)
-	random.shuffle(ls_yrep3)
-	random.shuffle(ls_yrep2)
 
 	return template('views/index.html', ls_pres=ls_pres,
 								  ls_vp=ls_vp,
@@ -94,9 +117,6 @@ def main():
 								  ls_media=ls_media,
 								  ls_pr=ls_pr,
 								  ls_cul=ls_cul,
-								  ls_yrep4=ls_yrep4,
-								  ls_yrep3=ls_yrep3,
-								  ls_yrep2=ls_yrep2,
 								  page="candidates")
 
 # getting manifesto json file

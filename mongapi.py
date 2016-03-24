@@ -107,4 +107,3 @@ if __name__=="__main__":
 	cand_map = {cand["cand_id"] : cand for cand in get_all_candidates()}
 	# print cand_map
 	readcsv.print_pretty_nom(nom_map, cand_map)
-		
