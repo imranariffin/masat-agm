@@ -14,7 +14,10 @@ import httpagentparser				# to track browser (anti-spamming mechanism)
 from bson.objectid import ObjectId  # cast string into objectid
 from collections import Counter		# count number of occurances in a list
 
-# MONGOLAB_URI = os.environ['MONGOLAB_URI2']
+try:
+	from auth import MONGOLAB_URI
+except ImportError:
+	MONGOLAB_URI = os.environ['MONGOLAB_URI']
 
 def eat_cookies():
 	cookie_id = bottle.request.get_cookie('mycookiename', str(uuid4()))
@@ -1045,4 +1048,4 @@ def admin():
 									  question_ls=question_ls,
 									  access=access)
 
-run(reloader=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
+run(reloader=True, host="0.0.0.0", port=int(os.environ.get("PORT", 1337)))

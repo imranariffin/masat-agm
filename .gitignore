@@ -59,3 +59,5 @@ script.py
 *.csv
 .env
 build/
+
+auth.py
