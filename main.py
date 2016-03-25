@@ -294,10 +294,8 @@ def vote():
 	get_sports = request.forms.sports
 	get_media = request.forms.media
 	get_pr = request.forms.pr
+	get_welf = request.forms.welf
 	get_cul = request.forms.cul
-	get_yrep4 = request.forms.yrep4
-	get_yrep3 = request.forms.yrep3
-	get_yrep2 = request.forms.yrep2
 	client = MongoClient(MONGOLAB_URI)
 	db = client.get_default_database()
 
@@ -314,10 +312,8 @@ def vote():
 	ls_sports = []
 	ls_media = []
 	ls_pr = []
+	ls_welf = []
 	ls_cul = []
-	ls_yrep4 = []
-	ls_yrep3 = []
-	ls_yrep2 = []
 
 	for doc in cursor_man:
 		if doc['position'] == "President":
@@ -334,14 +330,10 @@ def vote():
 			ls_media.append(doc['name'])
 		elif doc['position'] == "PR":
 			ls_pr.append(doc['name'])
+		elif doc['position'] == "Welfare":
+			ls_welf.append(doc['name'])
 		elif doc['position'] == "Cultural":
 			ls_cul.append(doc['name'])
-		elif doc['position'] == "YearRep4":
-			ls_yrep4.append(doc['name'])
-		elif doc['position'] == "YearRep3":
-			ls_yrep3.append(doc['name'])
-		elif doc['position'] == "YearRep2":
-			ls_yrep2.append(doc['name'])
 
 	new_cursor = votes.find()
 	code_ls = []
@@ -360,7 +352,7 @@ def vote():
 		blank = True
 	if get_code in code_ls and not blank:
 		access = False
-	if get_president and get_vice_president and get_secretary and get_treas and get_sports and get_media and get_pr and get_cul and get_yrep4 and get_yrep3 and get_yrep2:
+	if get_president and get_vice_president and get_secretary and get_treas and get_sports and get_media and get_pr and get_welf and get_cul:
 		all_filled = True
 	
 	if get_code:
@@ -398,10 +390,8 @@ def vote():
 					  "sports":str(get_sports),
 					  "media":str(get_media),
 					  "pr":str(get_pr),
+					  "welf":str(get_welf),
 					  "cul":str(get_cul),
-					  "yrep4":str(get_yrep4),
-					  "yrep3":str(get_yrep3),
-					  "yrep2":str(get_yrep2)
 					  })
 		cookies.insert({"code":get_code, "cookie":eat_cookies()})
 
@@ -417,10 +407,8 @@ def vote():
 									 ls_sports=ls_sports,
 									 ls_media=ls_media,
 									 ls_pr=ls_pr,
+									 ls_welf=ls_welf,
 									 ls_cul=ls_cul,
-									 ls_yrep4=ls_yrep4,
-									 ls_yrep3=ls_yrep3,
-									 ls_yrep2=ls_yrep2,
 									 complete=False,
 									 c=get_code,
 									 p=get_president,
@@ -430,10 +418,8 @@ def vote():
 									 sports=get_sports,
 									 media=get_media,
 									 pr=get_pr,
+									 welf=get_welf,
 									 cul=get_cul,
-									 yrep4=get_yrep4,
-									 yrep3=get_yrep3,
-									 yrep2=get_yrep2,
 									 page="vote",
 									 access=access,
 									 all_filled=all_filled,

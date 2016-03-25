@@ -6,6 +6,7 @@
     % if not complete:
     <div class="reg-content">
         <div class="btitle h1 text-center">AGM Vote</div>
+        <div class="btitle h3 text-center">Coming soon</div>
         % if not blank and not all_filled:
             <div class="wrong h3 text-center">Please fill in every form</div>
         % end
@@ -103,44 +104,22 @@
                     </div>
                 </div>
                 <div class="form-box">
+                    <label for="InputUni" class="label-area">Student Welfare Officer</label>
+                    <div class="input-group form-area">
+                        <select id="welf" name="welf" class="form-control">
+                            <option value="{{welf}}"><b>{{welf}}</b></option>
+                            % for name in ls_welf:
+                                <option value="{{name}}">{{name}}</option>
+                            % end
+                            </select>
+                    </div>
+                </div>
+                <div class="form-box">
                     <label for="InputUni" class="label-area">Cultural Affair Officer</label>
                     <div class="input-group form-area">
                         <select id="cul" name="cul" class="form-control">
                             <option value="{{cul}}"><b>{{cul}}</b></option>
                             % for name in ls_cul:
-                                <option value="{{name}}">{{name}}</option>
-                            % end
-                            </select>
-                    </div>
-                </div>
-                <div class="form-box">
-                    <label for="InputUni" class="label-area">4th Year Representatives</label>
-                    <div class="input-group form-area">
-                        <select id="yrep4" name="yrep4" class="form-control">
-                            <option value="{{yrep4}}"><b>{{yrep4}}</b></option>
-                            % for name in ls_yrep4:
-                                <option value="{{name}}">{{name}}</option>
-                            % end
-                            </select>
-                    </div>
-                </div>
-                <div class="form-box">
-                    <label for="InputUni" class="label-area">3rd Year Representatives</label>
-                    <div class="input-group form-area">
-                        <select id="yrep3" name="yrep3" class="form-control">
-                            <option value="{{yrep3}}"><b>{{yrep3}}</b></option>
-                            % for name in ls_yrep3:
-                                <option value="{{name}}">{{name}}</option>
-                            % end
-                            </select>
-                    </div>
-                </div>
-                <div class="form-box">
-                    <label for="InputUni" class="label-area">2nd Year Representatives</label>
-                    <div class="input-group form-area">
-                        <select id="yrep2" name="yrep2" class="form-control">
-                            <option value="{{yrep2}}"><b>{{yrep2}}</b></option>
-                            % for name in ls_yrep2:
                                 <option value="{{name}}">{{name}}</option>
                             % end
                             </select>
