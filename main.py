@@ -32,12 +32,6 @@ def server_static(filepath):
 # main function, the candidates
 @route("/", method="GET")
 def main():
-	# client = MongoClient(MONGOLAB_URI)
-	# db = client.get_default_database()
-	# man = db['nominations']
-
-	# cursor = man.find();
-	
 	nominations = mongapi.get_all_nominations()
 	cand_map = {cand["cand_id"] : cand for cand in mongapi.get_all_candidates()}
 
@@ -56,57 +50,56 @@ def main():
 				cand_map[doc['cand_id']]['name'],
 				doc['desc'],
 				doc['manifesto'],
+				doc['cand_id'],
 				doc['_id']])
 		elif doc['position'] == "Vice-President":
 			ls_vp.append([
 				cand_map[doc['cand_id']]['name'],
 				doc['desc'],
 				doc['manifesto'],
+				doc['cand_id'],
 				doc['_id']])
 		elif doc['position'] == "Secretary":
 			ls_sec.append([
 				cand_map[doc['cand_id']]['name'],
 				doc['desc'],
 				doc['manifesto'],
+				doc['cand_id'],
 				doc['_id']])
 		elif doc['position'] == "Treasurer":
 			ls_treas.append([
 				cand_map[doc['cand_id']]['name'],
 				doc['desc'],
 				doc['manifesto'],
+				doc['cand_id'],
 				doc['_id']])
 		elif doc['position'] == "Sports Officer":
 			ls_sport.append([
 				cand_map[doc['cand_id']]['name'],
 				doc['desc'],
 				doc['manifesto'],
+				doc['cand_id'],
 				doc['_id']])
 		elif doc['position'] == "Media Officer":
-			if "img_url" in cand_map[doc['cand_id']].keys():
-				ls_media.append([
-					cand_map[doc['cand_id']]['name'],
-					doc['desc'],
-					doc['manifesto'],
-					doc['_id'],
-					cand_map[doc['cand_id']]["img_url"]])
-			else:
-				ls_media.append([
-					cand_map[doc['cand_id']]['name'],
-					doc['desc'],
-					doc['manifesto'],
-					doc['_id'],
-					"img_url"])
+			ls_media.append([
+				cand_map[doc['cand_id']]['name'],
+				doc['desc'],
+				doc['manifesto'],
+				doc['cand_id'],
+				doc['_id']])
 		elif doc['position'] == "Student Welfare Officer":
 			ls_pr.append([
 				cand_map[doc['cand_id']]['name'],
 				doc['desc'],
 				doc['manifesto'],
+				doc['cand_id'],
 				doc['_id']])
 		elif doc['position'] == "Cultural Affairs Officer":
 			ls_cul.append([
 				cand_map[doc['cand_id']]['name'],
 				doc['desc'],
 				doc['manifesto'],
+				doc['cand_id'],
 				doc['_id']])
 
 	random.shuffle(ls_pres)
