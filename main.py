@@ -82,11 +82,20 @@ def main():
 				doc['manifesto'],
 				doc['_id']])
 		elif doc['position'] == "Media Officer":
-			ls_media.append([
-				cand_map[doc['cand_id']]['name'],
-				doc['desc'],
-				doc['manifesto'],
-				doc['_id']])
+			if "img_url" in cand_map[doc['cand_id']].keys():
+				ls_media.append([
+					cand_map[doc['cand_id']]['name'],
+					doc['desc'],
+					doc['manifesto'],
+					doc['_id'],
+					cand_map[doc['cand_id']]["img_url"]])
+			else:
+				ls_media.append([
+					cand_map[doc['cand_id']]['name'],
+					doc['desc'],
+					doc['manifesto'],
+					doc['_id'],
+					"img_url"])
 		elif doc['position'] == "Student Welfare Officer":
 			ls_pr.append([
 				cand_map[doc['cand_id']]['name'],
@@ -1067,5 +1076,11 @@ def admin():
 									  candidate_ls=candidate_ls,
 									  question_ls=question_ls,
 									  access=access)
+
+
+# api
+@get('/candidates')
+def candidates():
+	return dumps(mongapi.get_all_candidates())
 
 run(reloader=True, host="0.0.0.0", port=int(os.environ.get("PORT", 1337)))

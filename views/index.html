@@ -177,8 +177,9 @@
         <hr> 
         % for candidate in ls_media:
         <div class="row">
-          <div class="col-md-12">
-            <img src="static/img/{{candidate[0]}}.jpg" class="img-responsive img-rounded" />
+          <div class="col-md-5">
+            <!-- img used to be here -->
+            <img src="{{candidate[4]}}" class="img-responsive img-rounded" style="max-width:100%;" />
           </div>
         </div>
         <br>
