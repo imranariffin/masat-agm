@@ -43,6 +43,7 @@ def main():
 	ls_media = []
 	ls_pr = []
 	ls_cul = []
+	ls_welf = []
 
 	for doc in nominations:
 		if doc['position'] == "President":
@@ -87,8 +88,15 @@ def main():
 				doc['manifesto'],
 				doc['cand_id'],
 				doc['_id']])
-		elif doc['position'] == "Student Welfare Officer":
+		elif doc['position'] == "Public Relation":
 			ls_pr.append([
+				cand_map[doc['cand_id']]['name'],
+				doc['desc'],
+				doc['manifesto'],
+				doc['cand_id'],
+				doc['_id']])
+		elif doc['position'] == "Student Welfare Officer":
+			ls_welf.append([
 				cand_map[doc['cand_id']]['name'],
 				doc['desc'],
 				doc['manifesto'],
@@ -110,6 +118,7 @@ def main():
 	random.shuffle(ls_media)
 	random.shuffle(ls_pr)
 	random.shuffle(ls_cul)
+	random.shuffle(ls_welf)
 
 	return template('views/index.html', ls_pres=ls_pres,
 								  ls_vp=ls_vp,
@@ -119,6 +128,7 @@ def main():
 								  ls_media=ls_media,
 								  ls_pr=ls_pr,
 								  ls_cul=ls_cul,
+								  ls_welf=ls_welf,
 								  page="candidates")
 
 # getting manifesto json file
