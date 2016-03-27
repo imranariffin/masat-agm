@@ -41,6 +41,17 @@ def create_nominations(nominations, cand_map):
 
 	return nom_map
 
+def create_candidate_photos():
+	cand_photos = {}
+	with open("candidate-photos.csv") as photos_file:
+		cand_photos_reader = csv.DictReader(photos_file,
+											delimiter=",",
+											dialect="excel")
+		for row in cand_photos_reader:
+			cand_photos[row['CANDIDATE']] = row['PHOTO LINK']
+
+	return cand_photos
+
 def create_candidates(nominations):
 	"""
 	returns dict candidates:
@@ -91,6 +102,9 @@ def get_candidates():
 	
 	return cand_map
 
+def get_cand_photos():
+	return create_candidate_photos()
+
 def print_pretty_nom(nom_map, cand_map):
 	print "==="*30
 	count = 1
@@ -119,18 +133,22 @@ if __name__=="__main__":
 		for row in nominated_reader:
 			nominations.append(row)
 	
-	cand_map = create_candidates(nominations)
-	nom_map = create_nominations(nominations, cand_map)
+	# cand_map = create_candidates(nominations)
+	# nom_map = create_nominations(nominations, cand_map)
 
-	for cand_id in cand_map.keys():
-		print cand_id, cand_map[cand_id]
+	# for cand_id in cand_map.keys():
+	# 	print cand_id, cand_map[cand_id]
 
-	for nom_id in nom_map.keys():
-		nom = nom_map[nom_id]
-		print "==="*30
-		print "cand_id: ", nom["cand_id"]
-		print "candidate name: ", cand_map[nom["cand_id"]]
-		print "Position: ", nom['position']
-		print "candidate description: \n", nom['desc']
-		print "candidate manifesto: \n", nom["manifesto"]
-	print "==="*30
+	# for nom_id in nom_map.keys():
+	# 	nom = nom_map[nom_id]
+	# 	print "==="*30
+	# 	print "cand_id: ", nom["cand_id"]
+	# 	print "candidate name: ", cand_map[nom["cand_id"]]
+	# 	print "Position: ", nom['position']
+	# 	print "candidate description: \n", nom['desc']
+	# 	print "candidate manifesto: \n", nom["manifesto"]
+	# print "==="*30
+
+	cand_photos = create_candidate_photos()
+	for cand_name in cand_photos:
+		print cand_name, cand_photos[cand_name]

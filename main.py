@@ -34,6 +34,7 @@ def server_static(filepath):
 def main():
 	nominations = mongapi.get_all_nominations()
 	cand_map = {cand["cand_id"] : cand for cand in mongapi.get_all_candidates()}
+	photo_map = {cand_photo['CANDIDATE'] : cand_photo['PHOTO LINK'] for cand_photo in mongapi.get_all_cand_photos()}
 
 	ls_pres = []
 	ls_vp = []
@@ -52,63 +53,72 @@ def main():
 				doc['desc'],
 				doc['manifesto'],
 				doc['cand_id'],
-				doc['_id']])
+				doc['_id'],
+				photo_map[cand_map[doc['cand_id']]['name']]])
 		elif doc['position'] == "Vice-President":
 			ls_vp.append([
 				cand_map[doc['cand_id']]['name'],
 				doc['desc'],
 				doc['manifesto'],
 				doc['cand_id'],
-				doc['_id']])
+				doc['_id'],
+				photo_map[cand_map[doc['cand_id']]['name']]])
 		elif doc['position'] == "Secretary":
 			ls_sec.append([
 				cand_map[doc['cand_id']]['name'],
 				doc['desc'],
 				doc['manifesto'],
 				doc['cand_id'],
-				doc['_id']])
+				doc['_id'],
+				photo_map[cand_map[doc['cand_id']]['name']]])
 		elif doc['position'] == "Treasurer":
 			ls_treas.append([
 				cand_map[doc['cand_id']]['name'],
 				doc['desc'],
 				doc['manifesto'],
 				doc['cand_id'],
-				doc['_id']])
+				doc['_id'],
+				photo_map[cand_map[doc['cand_id']]['name']]])
 		elif doc['position'] == "Sports Officer":
 			ls_sport.append([
 				cand_map[doc['cand_id']]['name'],
 				doc['desc'],
 				doc['manifesto'],
 				doc['cand_id'],
-				doc['_id']])
+				doc['_id'],
+				photo_map[cand_map[doc['cand_id']]['name']]])
 		elif doc['position'] == "Media Officer":
 			ls_media.append([
 				cand_map[doc['cand_id']]['name'],
 				doc['desc'],
 				doc['manifesto'],
 				doc['cand_id'],
-				doc['_id']])
+				doc['_id'],
+				photo_map[cand_map[doc['cand_id']]['name']]])
 		elif doc['position'] == "Public Relation":
 			ls_pr.append([
 				cand_map[doc['cand_id']]['name'],
 				doc['desc'],
 				doc['manifesto'],
 				doc['cand_id'],
-				doc['_id']])
+				doc['_id'],
+				photo_map[cand_map[doc['cand_id']]['name']]])
 		elif doc['position'] == "Student Welfare Officer":
 			ls_welf.append([
 				cand_map[doc['cand_id']]['name'],
 				doc['desc'],
 				doc['manifesto'],
 				doc['cand_id'],
-				doc['_id']])
+				doc['_id'],
+				photo_map[cand_map[doc['cand_id']]['name']]])
 		elif doc['position'] == "Cultural Affairs Officer":
 			ls_cul.append([
 				cand_map[doc['cand_id']]['name'],
 				doc['desc'],
 				doc['manifesto'],
 				doc['cand_id'],
-				doc['_id']])
+				doc['_id'],
+				photo_map[cand_map[doc['cand_id']]['name']]])
 
 	random.shuffle(ls_pres)
 	random.shuffle(ls_vp)

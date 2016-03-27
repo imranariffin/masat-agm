@@ -53,6 +53,28 @@ def insert_all_nominations():
 
 	client.close()
 
+def insert_all_candidate_photos():
+	# set up db
+	client = MongoClient(MONGOLAB_URI)
+	db = client.get_default_database()
+	cand_photo_collection = db['cand_photos']
+
+	photo_map = readcsv.get_cand_photos()
+
+	for cand_name in photo_map:
+		photo_link = photo_map[cand_name]
+
+		if cand_photo_collection.find_one({"CANDIDATE" : cand_name}) == None:
+			insert_id = cand_photo_collection.insert_one({
+				"CANDIDATE" : cand_name, 
+				"PHOTO LINK" : photo_link
+			})
+			print "inserted ", photo_link
+		else:
+			print "err: ", photo_link, " oredy inserted"
+
+	client.close()
+
 def get_all_candidates():
 	# set up db
 	client = MongoClient(MONGOLAB_URI)
@@ -80,6 +102,20 @@ def get_all_nominations():
 
 	client.close()
 	return nominations
+
+def get_all_cand_photos():
+	# set up db
+	client = MongoClient(MONGOLAB_URI)
+	db = client.get_default_database()
+	cand_photo_collection = db['cand_photos']
+
+	cand_photos = []
+
+	for cand_photo in cand_photo_collection.find():
+		cand_photos.append(cand_photo)
+
+	client.close()
+	return cand_photos
 
 def delete_all_candidates():
 	"""
@@ -128,6 +164,29 @@ def delete_all_nominations():
 		nom_collection.delete_one({"_id" : nom["_id"]})
 	client.close()
 
+def delete_all_cand_photos():
+	"""
+	!!!!	WARNING THINK TWICE BEFORE USING THIS 	!!!!!
+	"""
+	# set up db
+	client = MongoClient(MONGOLAB_URI)
+	db = client.get_default_database()
+	cand_photo_collection = db['cand_photos']
+
+	print "deleting all candidate photos..."
+	import time
+	print "."
+	time.sleep(1)
+	print ".."
+	time.sleep(1)
+	print "..."
+	time.sleep(1)
+	print "done"
+
+	for cand_photo in cand_photo_collection.find():
+		cand_photo_collection.delete_one({"_id" : cand_photo["_id"]})
+	client.close()
+
 def update_candidate_photo(cand_id, img_url):
 	# set up db
 	client = MongoClient(MONGOLAB_URI)
@@ -147,15 +206,22 @@ def update_candidate_photo(cand_id, img_url):
 
 if __name__=="__main__":
 
-	# insert_all_candidates()
-	# insert_all_nominations()
+	delete_all_candidates()
+	delete_all_nominations()
+	delete_all_cand_photos()
+
+	insert_all_candidates()
+	insert_all_nominations()
+	insert_all_candidate_photos()
 
 	nom_map = {nom["nom_id"] : nom for nom in get_all_nominations()}
-	# print get_all_nominations()[0]
 	cand_map = {cand["cand_id"] : cand for cand in get_all_candidates()}
+	photo_map = {cand_photo['CANDIDATE'] : cand_photo['PHOTO LINK'] for cand_photo in get_all_cand_photos()}
 	# print cand_map
 	readcsv.print_pretty_nom(nom_map, cand_map)
 
 	for cand_id in cand_map.keys():
 		print cand_id, cand_map[cand_id]
 
+	for cand_name in photo_map.keys():
+		print cand_name, photo_map[cand_name]
