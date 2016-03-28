@@ -95,7 +95,7 @@ def main():
 				doc['cand_id'],
 				doc['_id'],
 				photo_map[cand_map[doc['cand_id']]['name']]])
-		elif doc['position'] == "Public Relation":
+		elif doc['position'] == "Public Relations Officer":
 			ls_pr.append([
 				cand_map[doc['cand_id']]['name'],
 				doc['desc'],

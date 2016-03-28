@@ -82,6 +82,7 @@ def get_nominations():
 										delimiter=",",
 										dialect="excel")
 		for row in nominated_reader:
+			print row
 			nominations.append(row)	
 
 	cand_map = create_candidates(nominations)
@@ -133,22 +134,22 @@ if __name__=="__main__":
 		for row in nominated_reader:
 			nominations.append(row)
 	
-	# cand_map = create_candidates(nominations)
-	# nom_map = create_nominations(nominations, cand_map)
+	cand_map = create_candidates(nominations)
+	nom_map = create_nominations(nominations, cand_map)
 
-	# for cand_id in cand_map.keys():
-	# 	print cand_id, cand_map[cand_id]
+	for nom_id in nom_map.keys():
+		nom = nom_map[nom_id]
+		print "==="*30
+		print "cand_id: ", nom["cand_id"]
+		print "candidate name: ", cand_map[nom["cand_id"]]
+		print "Position: ", nom['position']
+		print "candidate description: \n", nom['desc']
+		print "candidate manifesto: \n", nom["manifesto"]
+	print "==="*30
 
-	# for nom_id in nom_map.keys():
-	# 	nom = nom_map[nom_id]
-	# 	print "==="*30
-	# 	print "cand_id: ", nom["cand_id"]
-	# 	print "candidate name: ", cand_map[nom["cand_id"]]
-	# 	print "Position: ", nom['position']
-	# 	print "candidate description: \n", nom['desc']
-	# 	print "candidate manifesto: \n", nom["manifesto"]
-	# print "==="*30
+	for cand_id in cand_map.keys():
+		print cand_id, cand_map[cand_id]
 
-	cand_photos = create_candidate_photos()
-	for cand_name in cand_photos:
-		print cand_name, cand_photos[cand_name]
+	# cand_photos = create_candidate_photos()
+	# for cand_name in cand_photos:
+	# 	print cand_name, cand_photos[cand_name]
