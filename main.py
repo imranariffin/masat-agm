@@ -29,6 +29,10 @@ def eat_cookies():
 def server_static(filepath):
 	return static_file(filepath, root='.')
 
+def distinctify_nom(ls_nom):
+	nom_map = {nom['cand_id'] : nom for nom in ls_nom}
+	return [nom_map[cand_id] for cand_id in nom_map.keys()]
+
 # main function, the candidates
 @route("/", method="GET")
 def main():
@@ -848,15 +852,32 @@ def manifesto():
 											c=get_code,
 											access=access)
 
+@route("/tanya", method="GET")
+def get_tanya():
+	return template("views/tanya.html", page="tanya")
+
 # HashTagAskCandidate page
 @route("/ask", method="GET")
 @route("/ask", method="POST")
 def ask():
 	client = MongoClient(MONGOLAB_URI)
 	db = client.get_default_database()
-	man = db['man']
+
+	nominations = mongapi.get_all_nominations()
+	nominations = distinctify_nom(nominations)
+	cand_map = {cand["cand_id"] : cand for cand in mongapi.get_all_candidates()}
+
+	nom = db['nomination']
 	ask = db['ask']
-	candidate_ls = man.distinct("name")
+	candidate_ls = [cand_map[nom['cand_id']]['name'] for nom in nominations]
+
+	# remove item of value empty string ("") from candidate_ls
+	candidate_ls = [str(name) for name in candidate_ls if name!=""]
+	
+	print("\n/ask:")
+	print candidate_ls
+	print("")
+
 	candidate_ls.sort(key=lambda tup: tup[0], reverse=False)
 
 	question_ls = []
@@ -883,7 +904,12 @@ def ask():
 	if not blank:
 		get_fb_asker = request.forms.fb_asker
 
-		man_cursor = man.find({'name':get_candidate})
+		print ""
+		print "get_fb_asker: ", get_fb_asker
+		print "get_candidate: ", get_candidate
+		print ""
+
+		man_cursor = nom.find({'name':get_candidate})
 		insert_fb = ''
 		for doc in man_cursor:
 			insert_fb = doc['fb']
@@ -983,17 +1009,17 @@ def ask():
 	q_asked = []
 	q_name = [i[0] for i in question_ls]
 
-	man_for_q = []
-	c = Counter(q_name)
-	for i in candidate_ls:
-		man_cursor_2 = man.find({'name':i})
-		for doc in man_cursor_2:
-			for e in doc['manifesto']:
-				if e[0] not in ['1','2','3']:
-					man_for_q.append(e[0])
-		str_q = ', '.join(man_for_q)
-		q_asked.append([i, c[i], str_q])
-		man_for_q = []
+	# man_for_q = []
+	# c = Counter(q_name)
+	# for i in candidate_ls:
+	# 	man_cursor_2 = man.find({'name':i})
+	# 	for doc in man_cursor_2:
+	# 		for e in doc['manifesto']:
+	# 			if e[0] not in ['1','2','3']:
+	# 				man_for_q.append(e[0])
+	# 	str_q = ', '.join(man_for_q)
+	# 	q_asked.append([i, c[i], str_q])
+	# 	man_for_q = []
 
 	q_asked.sort(key=lambda tup: tup[1], reverse=False)
 
@@ -1080,6 +1106,6 @@ def admin():
 # api
 @get('/candidates')
 def candidates():
-	return dumps(mongapi.get_all_candidates())
+	return dumps(mongapi.get_all_candidates(), indent=4, default=json_util.default)
 
 run(reloader=True, host="0.0.0.0", port=int(os.environ.get("PORT", 1337)))
