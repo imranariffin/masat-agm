@@ -1,4 +1,4 @@
-#Bottle Framework
+# Bottle Framework
 from bottle import route, run, template, request, static_file, get, post, response, Bottle, error
 import bottle
 import os
@@ -316,38 +316,51 @@ def vote():
 	man = db['man']
 	votes = db['votes']
 	cookies = db['cookies']
+	cursor_man = man.find()
 
-	cursor_man = man.find();
+	nominations = mongapi.get_all_nominations()
+	cand_map = {cand["cand_id"] : cand for cand in mongapi.get_all_candidates()}
+	photo_map = {cand_photo['CANDIDATE'] : cand_photo['PHOTO LINK'] for cand_photo in mongapi.get_all_cand_photos()}
 
 	ls_pres = []
 	ls_vp = []
 	ls_sec = []
 	ls_treas = []
-	ls_sports = []
+	ls_sport = []
 	ls_media = []
 	ls_pr = []
-	ls_welf = []
 	ls_cul = []
+	ls_welf = []
 
-	for doc in cursor_man:
+	for doc in nominations:
 		if doc['position'] == "President":
-			ls_pres.append(doc['name'])
-		elif doc['position'] == "VP":
-			ls_vp.append(doc['name'])
+			ls_pres.append(cand_map[doc['cand_id']]['name'])
+		elif doc['position'] == "Vice-President":
+			ls_vp.append(cand_map[doc['cand_id']]['name'])
 		elif doc['position'] == "Secretary":
-			ls_sec.append(doc['name'])
+			ls_sec.append(cand_map[doc['cand_id']]['name'])
 		elif doc['position'] == "Treasurer":
-			ls_treas.append(doc['name'])
-		elif doc['position'] == "Sports":
-			ls_sports.append(doc['name'])
-		elif doc['position'] == "Media":
-			ls_media.append(doc['name'])
-		elif doc['position'] == "PR":
-			ls_pr.append(doc['name'])
-		elif doc['position'] == "Welfare":
-			ls_welf.append(doc['name'])
-		elif doc['position'] == "Cultural":
-			ls_cul.append(doc['name'])
+			ls_treas.append(cand_map[doc['cand_id']]['name'])
+		elif doc['position'] == "Sports Officer":
+			ls_sport.append(cand_map[doc['cand_id']]['name'])
+		elif doc['position'] == "Media Officer":
+			ls_media.append(cand_map[doc['cand_id']]['name'])
+		elif doc['position'] == "Public Relations Officer":
+			ls_pr.append(cand_map[doc['cand_id']]['name'])
+		elif doc['position'] == "Student Welfare Officer":
+			ls_welf.append(cand_map[doc['cand_id']]['name'])
+		elif doc['position'] == "Cultural Affairs Officer":
+			ls_cul.append(cand_map[doc['cand_id']]['name'])
+
+	random.shuffle(ls_pres)
+	random.shuffle(ls_vp)
+	random.shuffle(ls_sec)
+	random.shuffle(ls_treas)
+	random.shuffle(ls_sport)
+	random.shuffle(ls_media)
+	random.shuffle(ls_pr)
+	random.shuffle(ls_cul)
+	random.shuffle(ls_welf)
 
 	new_cursor = votes.find()
 	code_ls = []
@@ -418,7 +431,7 @@ def vote():
 									 ls_vp=ls_vp,
 									 ls_sec=ls_sec,
 									 ls_treas=ls_treas,
-									 ls_sports=ls_sports,
+									 ls_sport=ls_sport,
 									 ls_media=ls_media,
 									 ls_pr=ls_pr,
 									 ls_welf=ls_welf,
@@ -454,11 +467,12 @@ def resulty():
 	treas_count = {}
 	sports_count = {}
 	media_count = {}
+	welf_count = {}
 	cul_count = {}
 	pr_count = {}
-	yrep4_count = {}
-	yrep3_count = {}
-	yrep2_count = {}
+	# yrep4_count = {}
+	# yrep3_count = {}
+	# yrep2_count = {}
 	client = MongoClient(MONGOLAB_URI)
 	db = client.get_default_database()
 	votes = db['votes']
@@ -507,20 +521,20 @@ def resulty():
 			else:
 				cul_count[doc['cul']] += 1
 
-			if doc['yrep4'] not in yrep4_count:
-				yrep4_count[doc['yrep4']] = 1
+			if doc['welf'] not in welf_count:
+				welf_count[doc['welf']] = 1
 			else:
-				yrep4_count[doc['yrep4']] += 1
+				welf_count[doc['yrep4']] += 1
 
-			if doc['yrep3'] not in yrep3_count:
-				yrep3_count[doc['yrep3']] = 1
-			else:
-				yrep3_count[doc['yrep3']] += 1
+			# if doc['yrep3'] not in yrep3_count:
+			# 	yrep3_count[doc['yrep3']] = 1
+			# else:
+			# 	yrep3_count[doc['yrep3']] += 1
 
-			if doc['yrep2'] not in yrep2_count:
-				yrep2_count[doc['yrep2']] = 1
-			else:
-				yrep2_count[doc['yrep2']] += 1
+			# if doc['yrep2'] not in yrep2_count:
+			# 	yrep2_count[doc['yrep2']] = 1
+			# else:
+			# 	yrep2_count[doc['yrep2']] += 1
 		except:
 			print "problem"
 
@@ -852,9 +866,77 @@ def manifesto():
 											c=get_code,
 											access=access)
 
+@route("/fblogin", method="POST")
+def fblogin():
+	status = request.forms.status
+	res = request.forms.authResponse
+
+	print status
+	print res
+
+	return {"status" : status, "res" : res}
+
 @route("/tanya", method="GET")
 def get_tanya():
-	return template("views/tanya.html", page="tanya")
+
+	map_cand_photo = {cand_photo["CANDIDATE"] : cand_photo["PHOTO LINK"] for cand_photo in mongapi.get_all_cand_photos()}
+
+	# get photo link to each candidate
+	ls_cand = [cand for cand in mongapi.get_all_candidates() if cand["name"]!=""]
+	# ls_cand = [(cand["name"], map_cand_photo[cand["name"]], cand["cand_id"]) for cand in ls_cand]
+
+	# get questions for each candidate
+	ls_question = mongapi.get_questions()
+	map_question = {cand["cand_id"] : [] for cand in ls_cand}
+	for q in ls_question: map_question[q["cand_id"]].append((
+			str(q["_id"]),
+			str(q["cand_id"]),
+			str(q["asker"]),
+			str(q["question"]),
+			str(q["answer"])
+		))
+
+	print "ls_cand: ", ls_cand
+	print "ls_question: ", ls_question
+	print "map_question: ", map_question
+
+	# assign questions and photo to each candidate
+	ls_cand = [(cand["name"], map_cand_photo[cand["name"]], cand["cand_id"], map_question[cand["cand_id"]]) for cand in ls_cand]
+
+	print "\nfinally, ls_cand:\n"
+	for cand in ls_cand:
+		print cand
+
+	random.shuffle(ls_cand)
+
+	return template("views/tanya.html", page="tanya", 
+										ls_cand=ls_cand)
+
+
+@route("/tanya", method="POST")
+def post_tanya():
+	question = str(request.forms.question)
+	asker = str(request.forms.asker)
+	cand_id = str(request.forms.cand_id)
+
+	# debug
+	assert(type(cand_id)==type(str()))
+	assert(type(asker)==type(str()))
+	assert(type(question)==type(str()))
+	print "cand_id: ", cand_id
+	print "question: ", question
+	print "asker: ", asker
+
+	insert_id = mongapi.insert_question(asker, question, cand_id)
+
+	ret = {
+		"status" : "success",
+		"q_id" : str(insert_id),
+		"question" : question,
+		"asker" : asker,
+		"cand_id" : cand_id
+	}
+	return ret
 
 # HashTagAskCandidate page
 @route("/ask", method="GET")

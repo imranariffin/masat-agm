@@ -9,7 +9,20 @@
         // for FB.getLoginStatus().
         if (response.status === 'connected') {
           // Logged into your app and Facebook.
+          console.log("sending fb data to server");
+          $.ajax({
+            url : '/fblogin',
+            type : 'POST',
+            data : response,
+            success : function (res) {
+              console.log(res);
+            },
+            error : function (err) {
+              console.log(err);
+            }
+          });          
           testAPI();
+          document.getElementById("fbloginbtn").visibility = 'collapse';
         } else if (response.status === 'not_authorized') {
           // The person is logged into Facebook, but not your app.
           document.getElementById('status').innerHTML = 'Please log ' +
@@ -77,9 +90,13 @@
           console.log('Successful login for: ' + response.name);
           document.getElementById('status').innerHTML =
             'Thanks for logging in, ' + response.name + '!';
-            $("button").click(function(){
-              var text = $(this).val();
-              $("button").val(text + response.name)
-            })
+          $("button").click(function(){
+            var text = $(this).val();
+            $("button").val(text + response.name)
+          });
+
+
+          console.log("response in testAPI:");
+          console.log(response);
         });
       }

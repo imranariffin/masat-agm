@@ -117,6 +117,16 @@ def get_all_cand_photos():
 	client.close()
 	return cand_photos
 
+def get_all_votes():
+	# set up db
+	client = MongoClient(MONGOLAB_URI)
+	db = client.get_default_database()
+	vote_collection = db['votes']
+
+	votes = [vote for vote in vote_collection.find()]
+	client.close()
+	return votes
+
 def delete_all_candidates():
 	"""
 	!!!!	WARNING THINK TWICE BEFORE USING THIS 	!!!!!
@@ -187,6 +197,53 @@ def delete_all_cand_photos():
 		cand_photo_collection.delete_one({"_id" : cand_photo["_id"]})
 	client.close()
 
+def delete_all_questions():
+	"""
+	!!!!	WARNING THINK TWICE BEFORE USING THIS 	!!!!!
+	"""
+	# set up db
+	client = MongoClient(MONGOLAB_URI)
+	db = client.get_default_database()
+	q_collection = db['questions']
+
+	print "deleting all questions..."
+	import time
+	print "."
+	time.sleep(1)
+	print ".."
+	time.sleep(1)
+	print "..."
+	time.sleep(1)
+	print "done"
+
+	for q in q_collection.find():
+		q_collection.delete_one({"_id" : q["_id"]})
+
+	client.close()
+
+def delete_all_votes():
+	"""
+	!!!!	WARNING THINK TWICE BEFORE USING THIS 	!!!!!
+	"""
+	# set up db
+	client = MongoClient(MONGOLAB_URI)
+	db = client.get_default_database()
+	vote_collection = db['votes']
+
+	print "deleting all votes..."
+	import time
+	print "."
+	time.sleep(1)
+	print ".."
+	time.sleep(1)
+	print "..."
+	time.sleep(1)
+	print "done"
+
+	for vote in vote_collection.find():
+		vote_collection.delete_one({"_id" : vote["_id"]})
+	client.close()
+
 def update_candidate_photo(cand_id, img_url):
 	# set up db
 	client = MongoClient(MONGOLAB_URI)
@@ -203,6 +260,40 @@ def update_candidate_photo(cand_id, img_url):
 	print "matched_count: ", res.matched_count
 	print "modified_count: ", res.modified_count
 	client.close()
+
+def insert_question(asker, question, cand_id):
+	# set up db
+	client = MongoClient(MONGOLAB_URI)
+	db = client.get_default_database()
+	q_collection = db['questions']
+
+	insert_id = q_collection.insert_one({
+			"cand_id" : cand_id,
+			"question" : question,
+			"asker" : asker,
+			"answer" : ""
+		}).inserted_id
+
+	client.close()
+	return insert_id
+
+def get_questions():
+	# set up db
+	client = MongoClient(MONGOLAB_URI)
+	db = client.get_default_database()
+	q_collection = db['questions']
+
+	return [q for q in q_collection.find()]
+
+def get_cand_questions(cand_id):
+	# set up db
+	client = MongoClient(MONGOLAB_URI)
+	db = client.get_default_database()
+	q_collection = db['questions']	
+
+	return [q for q in q_collection.find({"cand_id" : cand_id})]
+
+
 
 if __name__=="__main__":
 
@@ -225,3 +316,4 @@ if __name__=="__main__":
 
 	for cand_name in photo_map.keys():
 		print cand_name, photo_map[cand_name]
+

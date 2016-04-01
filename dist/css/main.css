@@ -2,3 +2,5 @@ img-no-resize {
   min-height: 10px;
   min-width: 10px;
 }
+
+.panel { word-wrap: break-word; } 
