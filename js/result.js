@@ -13,12 +13,14 @@ function callAjax() {
                     var col_arr = new Array();
 
                     $.each(pos.ls, function (j, candidate) {
-                        col_arr.push(candidate)
+                        console.log("candidate: ");
+                        console.log(candidate);
+                        col_arr.push(candidate);
                     });
 
                     var chart = c3.generate({
                         bindto: '#' + pos.position + '_chart',
-                        data: {
+                        data:                                                                           {
                             columns: col_arr,
                             type: 'pie'
                         },

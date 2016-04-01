@@ -554,10 +554,11 @@ def resulty():
 	sports = []
 	media = []
 	cul = []
+	welf = []
 	pr = []
-	yrep4 = []
-	yrep3 = []
-	yrep2 = []
+	# yrep4 = []
+	# yrep3 = []
+	# yrep2 = []
 
 	for key in president_count:
 		pc.append([key, president_count[key]])
@@ -575,12 +576,14 @@ def resulty():
 		cul.append([key, cul_count[key]])
 	for key in pr_count:
 		pr.append([key, pr_count[key]])
-	for key in yrep4_count:
-		yrep4.append([key, yrep4_count[key]])
-	for key in yrep3_count:
-		yrep3.append([key, yrep3_count[key]])
-	for key in yrep2_count:
-		yrep2.append([key, yrep2_count[key]])
+	for key in welf_count:
+		welf.append([key, welf_count[key]])
+	# for key in yrep4_count:
+	# 	yrep4.append([key, yrep4_count[key]])
+	# for key in yrep3_count:
+	# 	yrep3.append([key, yrep3_count[key]])
+	# for key in yrep2_count:
+	# 	yrep2.append([key, yrep2_count[key]])
 
 	full_ls = [{'position':'p','ls':pc},
 			   {'position':'vp','ls':vpc},
@@ -589,10 +592,11 @@ def resulty():
 			   {'position':'sports','ls':sports},
 			   {'position':'media','ls':media},
 			   {'position':'cul','ls':cul},
-			   {'position':'pr','ls':pr},
-			   {'position':'yrep4','ls':yrep4},
-			   {'position':'yrep3','ls':yrep3},
-			   {'position':'yrep2','ls':yrep2}]
+			   {'position':'cul','ls':welf},
+			   {'position':'pr','ls':pr}]
+			   # {'position':'yrep4','ls':yrep4},
+			   # {'position':'yrep3','ls':yrep3},
+			   # {'position':'yrep2','ls':yrep2}]
 
 	client.close()
 	return dumps(full_ls, sort_keys=True, indent=4, default=json_util.default)

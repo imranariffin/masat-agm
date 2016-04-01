@@ -50,7 +50,7 @@ $(function() {
 				var maxList =   [{'position':'President', 'max':0}, 
 									  {'position':'VP', 'max':0}, 
 									  {'position':'Secretary', 'max':0}, 
-									  {'position':'Treasurer', 'max':0}, 
+									  {'position':'Treasurer', 'max':0},
 									  {'position':'Media', 'max':0}, 
 									  {'position':'Sports', 'max':0}, 
 									  {'position':'PR', 'max':0}, 
