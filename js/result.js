@@ -5,6 +5,9 @@ $(function () {
 });
 
 function callAjax() {
+
+    var dum_names = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+
     $.ajax({
         type: 'GET',
         url: '/resultAPI',
@@ -15,6 +18,7 @@ function callAjax() {
                     $.each(pos.ls, function (j, candidate) {
                         console.log("candidate: ");
                         console.log(candidate);
+                        candidate[0] = dum_names[j];
                         col_arr.push(candidate);
                     });
 

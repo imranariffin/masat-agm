@@ -127,7 +127,7 @@ if __name__=="__main__":
 			   {'position':'sports','ls':sports},
 			   {'position':'media','ls':media},
 			   {'position':'cul','ls':cul},
-			   {'position':'cul','ls':welf},
+			   {'position':'welf','ls':welf},
 			   {'position':'pr','ls':pr}]
 
 	for r in full_ls:
